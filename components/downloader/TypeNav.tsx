@@ -73,29 +73,29 @@ export default function TypeNav({ activeType }: TypeNavProps) {
     ];
 
     return (
-        <div className="mb-8 border-b border-border">
-            <div className="flex overflow-x-auto overflow-y-hidden no-scrollbar pb-2 px-2 gap-4 md:gap-8 justify-start md:justify-center items-center">
+        <div className="mb-6 md:mb-8 border-b border-border">
+            <div className="flex overflow-x-auto overflow-y-hidden no-scrollbar pb-2 px-1 md:px-2 gap-2 md:gap-8 justify-start md:justify-center items-center">
                 {navItems.map((item) => {
                     const isActive = activeType === item.type;
                     return (
                         <Link
                             key={item.type}
                             href={item.href}
-                            className={`flex flex-col items-center gap-2 py-2 px-1 min-w-fit transition-all relative group ${
+                            className={`flex flex-col items-center gap-1.5 md:gap-2 py-2 px-1 min-w-fit transition-all relative group ${
                                 isActive
                                     ? "text-primary"
                                     : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
                             <div
-                                className={`p-2.5 rounded-2xl transition-all ${
+                                className={`p-2 md:p-2.5 rounded-xl md:rounded-2xl transition-all ${
                                     isActive
                                         ? "bg-primary/10 shadow-sm shadow-primary/20"
                                         : "group-hover:bg-muted"
                                 }`}
                             >
                                 <svg
-                                    className="w-6 h-6"
+                                    className="w-5 h-5 md:w-6 md:h-6"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"

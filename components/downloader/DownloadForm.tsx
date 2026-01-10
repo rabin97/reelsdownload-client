@@ -2,7 +2,7 @@
 
 import { api } from "@/lib/api";
 import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type DownloadType =
     | "video"
@@ -24,14 +24,26 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
     const [result, setResult] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [inputUrl, setInputUrl] = useState<string>("");
+    const resultRef = useRef<HTMLDivElement>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    useEffect(() => {
+        if (result && resultRef.current) {
+            // Small timeout to ensure DOM is updated and layout stable
+            setTimeout(() => {
+                resultRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }, 100);
+        }
+    }, [result]);
+
+    const processDownload = async (url: string) => {
         setError(null);
         setResult(null);
 
         // 1. Sanitize
-        const sanitizedUrl = sanitizeInput(inputUrl);
+        const sanitizedUrl = sanitizeInput(url);
 
         if (!sanitizedUrl) {
             setError("Please enter a valid URL.");
@@ -58,6 +70,23 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
             setError(err.message || "Something went wrong. Please try again.");
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleSubmit = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+        await processDownload(inputUrl);
+    };
+
+    const handlePaste = async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+                setInputUrl(text);
+                await processDownload(text);
+            }
+        } catch (err) {
+            setError("Failed to access clipboard. Please paste manually.");
         }
     };
 
@@ -431,35 +460,55 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto mb-12 px-4 md:px-0 text-center">
+        <div className="w-full max-w-4xl mx-auto mb-8 md:mb-12 px-2 md:px-0 text-center">
             {error && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400 font-semibold animate-in fade-in slide-in-from-top-2">
+                <div className="mb-4 md:mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400 font-semibold animate-in fade-in slide-in-from-top-2">
                     {error}
                 </div>
             )}
 
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col md:flex-row gap-4 items-center p-2 bg-card rounded-[28px] border-2 border-primary/20 hover:border-primary/40 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all shadow-lg shadow-primary/5"
+                className="flex flex-col md:flex-row gap-3 md:gap-4 items-center p-1.5 md:p-2 bg-card rounded-[24px] md:rounded-[28px] border-2 border-primary/20 hover:border-primary/40 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all shadow-lg shadow-primary/5"
             >
-                <div className="relative flex-1 w-full group">
+                <div className="relative flex-1 w-full group flex items-center">
                     <input
                         type="text"
                         placeholder={placeholder}
                         value={inputUrl}
                         onChange={(e) => setInputUrl(e.target.value)}
-                        className="w-full pl-6 pr-4 py-4 bg-transparent border-none text-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-0 transition-all font-medium"
+                        className="w-full pl-5 md:pl-6 pr-16 md:pr-20 py-3 md:py-4 bg-transparent border-none text-base md:text-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-0 transition-all font-medium"
                     />
+                    <button
+                        type="button"
+                        onClick={handlePaste}
+                        className="absolute right-1.5 md:right-2 px-3 py-1.5 bg-primary/10 text-primary text-[10px] md:text-xs font-bold rounded-full hover:bg-primary hover:text-primary-foreground transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
+                    >
+                        <svg
+                            className="w-3.5 h-3.5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2.5}
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                            />
+                        </svg>
+                        PASTE
+                    </button>
                 </div>
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full md:w-auto px-8 py-4 bg-primary text-primary-foreground text-lg font-bold rounded-4xl shadow-lg shadow-primary/25 hover:bg-primary/90 hover:shadow-primary/40 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed transition-all whitespace-nowrap uppercase tracking-wider flex items-center justify-center gap-2"
+                    className="w-full md:w-auto px-6 md:px-8 py-3.5 md:py-4 bg-primary text-primary-foreground text-base md:text-lg font-bold rounded-2xl md:rounded-4xl shadow-lg shadow-primary/25 hover:bg-primary/90 hover:shadow-primary/40 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed transition-all whitespace-nowrap uppercase tracking-wider flex items-center justify-center gap-2"
                 >
                     {isLoading ? (
                         <>
                             <svg
-                                className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                                className="animate-spin -ml-1 mr-2 h-4 w-4 md:h-5 md:w-5 text-white"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
@@ -483,7 +532,7 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                     ) : (
                         <>
                             <svg
-                                className="w-5 h-5"
+                                className="w-4 h-4 md:w-5 md:h-5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -518,7 +567,9 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                 {getExampleText()}
             </p>
 
-            <div className="mt-12 text-left">{renderResult()}</div>
+            <div ref={resultRef} className="mt-8 md:mt-12 text-left">
+                {renderResult()}
+            </div>
         </div>
     );
 }
