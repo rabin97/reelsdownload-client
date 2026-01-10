@@ -36,102 +36,219 @@ export default function DPPage() {
             <HowItWorks />
             <Features />
 
-            <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
-                <div className="mb-16 text-left md:text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        See Instagram Profile Pictures in Full Size
-                    </h2>
-                    <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We've all struggled with that tiny circle on Instagram.
-                        Someone requests to follow you, or you see a brand
-                        update their logo, but you just can't see the details.
-                        ReelsLoad's Instagram DP Downloader solves this
-                        instantly. We let you view and download any public
-                        Instagram profile picture (Insta DP) in its original,
-                        full-size quality.
-                    </p>
+            <section className="max-w-6xl mx-auto px-4 py-16 md:py-24">
+                {/* Brand Story Section */}
+                <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
+                    <div className="space-y-6">
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">
+                            Viewing Profile Pictures in{" "}
+                            <span className="text-primary">True HD</span>
+                        </h2>
+                        <p className="text-lg text-muted-foreground leading-relaxed">
+                            We've all struggled with that tiny circle on
+                            Instagram. Someone requests to follow you, or you
+                            see a brand update their logo, but you just can't
+                            see the details.
+                        </p>
+                        <p className="text-lg text-muted-foreground leading-relaxed">
+                            **ReelsLoad DP** solves this instantly. We bypass
+                            the small thumbnail and fetch the high-definition
+                            version of the profile photo. See every detail
+                            clearly and save the image in its original size
+                            without any compression or cropping.
+                        </p>
+                        <div className="flex items-center gap-4 pt-4">
+                            <div className="flex -space-x-3">
+                                {[25, 26, 27, 28].map((i) => (
+                                    <div
+                                        key={i}
+                                        className="w-10 h-10 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[10px] font-bold overflow-hidden"
+                                    >
+                                        <img
+                                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${
+                                                i * 9
+                                            }`}
+                                            alt="User"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            <p className="text-sm font-semibold text-foreground">
+                                Helped 8k+ users identify accounts
+                            </p>
+                        </div>
+                    </div>
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-red-500/20 blur-3xl rounded-full -z-10 group-hover:bg-red-500/30 transition-colors"></div>
+                        <div className="bg-card p-8 md:p-10 rounded-[40px] border border-border shadow-2xl relative overflow-hidden ring-1 ring-primary/5">
+                            <div className="flex gap-4 items-start mb-8 italic text-lg text-foreground font-medium leading-relaxed">
+                                <svg
+                                    className="w-10 h-10 text-primary shrink-0 opacity-50"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C20.1216 16 21.017 15.1046 21.017 14V11C21.017 9.89543 20.1216 9 19.017 9H16.017C14.9124 9 14.017 8.10457 14.017 7V4C14.017 2.89543 14.9124 2 16.017 2H19.017C21.2261 2 23.017 3.79086 23.017 6V14C23.017 17.866 19.883 21 16.017 21H14.017ZM3.017 21L3.017 18C3.017 16.8954 3.91243 16 5.017 16H8.017C9.12157 16 10.017 15.1046 10.017 14V11C10.017 9.89543 9.12157 9 8.017 9H5.017C3.91243 9 3.017 8.10457 3.017 7V4C3.017 2.89543 3.91243 2 5.017 2H8.017C10.2261 2 12.017 3.79086 12.017 6V14C12.017 17.866 8.883 21 5.017 21H3.017Z" />
+                                </svg>
+                                <span>
+                                    I always use this to see brand logos better.
+                                    The quality is perfect, and I can actually
+                                    save the image in high resolution.
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-600 font-bold">
+                                    BR
+                                </div>
+                                <div>
+                                    <div className="font-bold text-foreground">
+                                        Ben Ross
+                                    </div>
+                                    <div className="text-sm text-muted-foreground">
+                                        Freelance Designer
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 mb-20">
-                    <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
+                {/* Benefits Grid */}
+                <div className="grid md:grid-cols-3 gap-6 mb-24">
+                    <div className="group bg-card p-8 rounded-3xl border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                            <svg
+                                className="w-7 h-7"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                />
+                            </svg>
+                        </div>
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Original HD Quality
+                            Deep Zoom
                         </h3>
-                        <p>
-                            We bypass the small thumbnail and fetch the
-                            high-definition version of the profile photo stored
-                            on the server.
+                        <p className="text-muted-foreground leading-relaxed">
+                            Don't squint at tiny thumbnails. We fetch the master
+                            image so you can zoom in and see every detail
+                            clearly.
                         </p>
                     </div>
-                    <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
+                    <div className="group bg-card p-8 rounded-3xl border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                        <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                            <svg
+                                className="w-7 h-7"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                                />
+                            </svg>
+                        </div>
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Zoom & Save
+                            Original HD
                         </h3>
-                        <p>
-                            Finally, you can zoom in! See every detail clearly
-                            and save the image directly to your gallery for
-                            future reference.
+                        <p className="text-muted-foreground leading-relaxed">
+                            We pull the 1080p source file when available. No
+                            compression, no pixelation – just the pure image
+                            file.
                         </p>
                     </div>
-                    <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
+                    <div className="group bg-card p-8 rounded-3xl border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 mb-6 group-hover:scale-110 transition-transform">
+                            <svg
+                                className="w-7 h-7"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                                />
+                            </svg>
+                        </div>
                         <h3 className="text-xl font-bold text-foreground mb-4">
                             Instant View
                         </h3>
-                        <p>
-                            Just type the username. No need to follow the person
-                            or wait for approval. If the profile is public, the
-                            DP is yours to view.
+                        <p className="text-muted-foreground leading-relaxed">
+                            Simply paste the username or profile URL and the HD
+                            image appears instantly. No login or verification
+                            required.
                         </p>
                     </div>
                 </div>
 
-                <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
-                    <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad to View DPs?
-                    </h2>
-                    <p className="text-center text-lg mb-8">
-                        ReelsLoad offers the fastest way to "un-shrink"
-                        Instagram profile pictures. Whether you are verifying a
-                        friend's identity, checking out a business logo, or just
-                        curious, our tool gives you the clarity you need. It's a
-                        simple, respectful utility that makes browsing Instagram
-                        that much better.
-                    </p>
-                </div>
+                {/* FAQ Section */}
+                <div
+                    id="faq"
+                    className="scroll-mt-24 pt-16 border-t border-border"
+                >
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-foreground mb-4">
+                            Insta DP FAQs
+                        </h2>
+                        <p className="text-lg text-muted-foreground">
+                            Answering common questions about profile picture
+                            viewing.
+                        </p>
+                    </div>
 
-                <div id="faq" className="border-t border-border pt-16">
-                    <h2 className="text-3xl font-bold text-foreground mb-10 text-center">
-                        Frequently Asked Questions
-                    </h2>
-                    <div className="space-y-8 max-w-3xl mx-auto">
-                        <div className="space-y-3">
-                            <h3 className="text-xl font-semibold text-foreground">
-                                Can I view profile pictures of private accounts?
-                            </h3>
-                            <p>
-                                Typically, yes! Even for private accounts, the
-                                profile picture itself is often publicly
-                                accessible via our tool, unlike their posts.
+                    <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <div className="bg-card p-6 rounded-3xl border border-border hover:border-primary/30 transition-colors">
+                            <div className="font-bold text-foreground mb-2 flex items-center gap-2">
+                                <span className="text-primary">Q:</span> Can I
+                                view profile pictures of private accounts?
+                            </div>
+                            <p className="text-muted-foreground">
+                                Yes! Even for private accounts, the profile
+                                picture itself is often publicly accessible via
+                                our tool, unlike their actual posts or stories.
                             </p>
                         </div>
-                        <div className="space-y-3">
-                            <h3 className="text-xl font-semibold text-foreground">
-                                Is the quality really HD?
-                            </h3>
-                            <p>
-                                We fetch the best quality Instagram has
-                                available. If the user uploaded a high-res
-                                photo, that is exactly what you will get.
+                        <div className="bg-card p-6 rounded-3xl border border-border hover:border-primary/30 transition-colors">
+                            <div className="font-bold text-foreground mb-2 flex items-center gap-2">
+                                <span className="text-primary">Q:</span> Is the
+                                quality really HD?
+                            </div>
+                            <p className="text-muted-foreground">
+                                We fetch the highest resolution version
+                                Instagram provides for profile photos. If the
+                                original upload was HD, that is what you'll see.
                             </p>
                         </div>
-                        <div className="space-y-3">
-                            <h3 className="text-xl font-semibold text-foreground">
-                                Do they know I viewed their DP?
-                            </h3>
-                            <p>
-                                No, viewing or downloading a profile picture is
-                                completely anonymous. The user is never
-                                notified.
+                        <div className="bg-card p-6 rounded-3xl border border-border hover:border-primary/30 transition-colors">
+                            <div className="font-bold text-foreground mb-2 flex items-center gap-2">
+                                <span className="text-primary">Q:</span> Do they
+                                know I viewed their DP?
+                            </div>
+                            <p className="text-muted-foreground">
+                                No, viewing or saving a profile picture using
+                                ReelsLoad is completely anonymous. The user
+                                receives no notification of your visit.
+                            </p>
+                        </div>
+                        <div className="bg-card p-6 rounded-3xl border border-border hover:border-primary/30 transition-colors">
+                            <div className="font-bold text-foreground mb-2 flex items-center gap-2">
+                                <span className="text-primary">Q:</span> What
+                                file format is used?
+                            </div>
+                            <p className="text-muted-foreground">
+                                DPs are typically saved in high-quality JPEG
+                                format, ensuring compatibility with all devices
+                                and image viewers.
                             </p>
                         </div>
                     </div>

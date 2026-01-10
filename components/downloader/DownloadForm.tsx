@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
 import React, { useState } from "react";
 
@@ -20,14 +21,14 @@ interface DownloadFormProps {
 
 export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [result, setResult] = useState<boolean>(false);
+    const [result, setResult] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [inputUrl, setInputUrl] = useState<string>("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-        setResult(false);
+        setResult(null);
 
         // 1. Sanitize
         const sanitizedUrl = sanitizeInput(inputUrl);
@@ -48,15 +49,13 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
         setIsLoading(true);
 
         try {
-            // Simulate API call with artificial delay to show loader
-            // const data = await api.post('/download', { url: sanitizedUrl, type }); // Future integration
-
-            await new Promise((resolve) => setTimeout(resolve, 1500)); // Fake delay
-
-            setResult(true);
-        } catch (err) {
-            console.error("Download failed:", err);
-            setError("Failed to process the request. Please try again later.");
+            const response = await api.post<any>("/download", {
+                url: sanitizedUrl,
+                type,
+            });
+            setResult(response.data);
+        } catch (err: any) {
+            setError(err.message || "Something went wrong. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -65,14 +64,28 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
     const renderResult = () => {
         if (!result) return null;
 
+        const handleDownload = (url: string, filename: string) => {
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
         switch (type) {
             case "video":
             case "reels":
                 return (
                     <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="flex flex-col md:flex-row gap-8 items-start">
-                            <div className="w-full md:w-1/3 bg-black rounded-xl overflow-hidden aspect-9/16 relative shadow-lg group">
-                                <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-full md:w-1/3 aspect-9/16 bg-muted rounded-3xl overflow-hidden relative shadow-2xl group">
+                                <img
+                                    src={result.thumbnail}
+                                    alt="Video Preview"
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-all">
                                     <svg
                                         className="w-16 h-16 text-white opacity-80"
                                         fill="currentColor"
@@ -85,26 +98,40 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                                         />
                                     </svg>
                                 </div>
-                                {/* Video Preview Placeholder */}
-                                <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-400 text-sm">
-                                    Video Preview
-                                </div>
                             </div>
-                            <div className="flex-1 w-full">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="w-10 h-10 rounded-full bg-muted"></div>
+                            <div className="flex-1 w-full text-left">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                                        {result.username?.[0]?.toUpperCase() ||
+                                            "U"}
+                                    </div>
                                     <div className="flex-1">
-                                        <div className="h-4 bg-muted rounded w-1/3 mb-2"></div>
-                                        <div className="h-3 bg-muted/50 rounded w-1/4"></div>
+                                        <div className="font-bold text-lg text-foreground">
+                                            @
+                                            {result.username ||
+                                                "instagram_user"}
+                                        </div>
+                                        <div className="text-sm text-muted-foreground">
+                                            {result.duration || "0:15"}
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="space-y-2 mb-6">
-                                    <div className="h-3 bg-muted/50 rounded w-full"></div>
-                                    <div className="h-3 bg-muted/50 rounded w-5/6"></div>
+                                <div className="bg-muted/30 p-4 rounded-2xl mb-6">
+                                    <p className="text-foreground line-clamp-3">
+                                        {result.title}
+                                    </p>
                                 </div>
-                                <button className="w-full py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                <button
+                                    onClick={() =>
+                                        handleDownload(
+                                            result.url,
+                                            "reels-video.mp4"
+                                        )
+                                    }
+                                    className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:bg-primary/90 transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20 group"
+                                >
                                     <svg
-                                        className="w-5 h-5"
+                                        className="w-6 h-6 group-hover:translate-y-0.5 transition-transform"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -124,22 +151,110 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                 );
 
             case "photo":
+                const photos = Array.isArray(result) ? result : [result];
+                return (
+                    <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            {photos.map((item: any, index: number) => (
+                                <div
+                                    key={index}
+                                    className="bg-card p-3 rounded-3xl border border-border shadow-sm hover:shadow-xl transition-all group"
+                                >
+                                    <div className="aspect-square bg-muted rounded-2xl mb-4 overflow-hidden relative">
+                                        <img
+                                            src={item.thumbnail || item.url}
+                                            alt={`Photo ${index + 1}`}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    </div>
+                                    <button
+                                        onClick={() =>
+                                            handleDownload(
+                                                item.url,
+                                                `photo-${index + 1}.jpg`
+                                            )
+                                        }
+                                        className="w-full py-2.5 bg-primary/10 text-primary font-bold rounded-xl hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center gap-2"
+                                    >
+                                        <svg
+                                            className="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                            />
+                                        </svg>
+                                        Download
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+
             case "thumbnail":
+                return (
+                    <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="max-w-2xl mx-auto">
+                            <div className="bg-card p-4 rounded-3xl border border-border shadow-xl">
+                                <img
+                                    src={result.url}
+                                    className="w-full rounded-2xl mb-6 shadow-sm"
+                                    alt="Thumbnail"
+                                />
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    {result.qualities?.map(
+                                        (q: any, i: number) => (
+                                            <button
+                                                key={i}
+                                                onClick={() =>
+                                                    handleDownload(
+                                                        q.url,
+                                                        `thumbnail-${q.label}.jpg`
+                                                    )
+                                                }
+                                                className="py-3 bg-muted hover:bg-primary hover:text-primary-foreground text-foreground font-semibold rounded-xl transition-all text-sm"
+                                            >
+                                                {q.label}
+                                            </button>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+
             case "dp":
             case "profile":
                 return (
-                    <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Mock Item 1 */}
-                            <div className="bg-card p-4 rounded-2xl border border-border shadow-sm hover:shadow-md transition-shadow">
-                                <div className="aspect-square bg-muted rounded-xl mb-4 overflow-hidden relative">
-                                    <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                                        Image Preview
-                                    </div>
+                    <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left">
+                        <div className="bg-card p-8 rounded-[32px] border border-border shadow-2xl flex flex-col md:flex-row gap-8 items-center md:items-start">
+                            <div className="relative group">
+                                <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary/20 p-1 group-hover:border-primary/50 transition-all">
+                                    <img
+                                        src={result.profile_pic}
+                                        alt="Profile"
+                                        className="w-full h-full rounded-full object-cover"
+                                    />
                                 </div>
-                                <button className="w-full py-2.5 bg-primary/10 text-primary font-bold rounded-lg hover:bg-primary/20 transition-colors flex items-center justify-center gap-2">
+                                <button
+                                    onClick={() =>
+                                        handleDownload(
+                                            result.profile_pic,
+                                            "profile-picture.jpg"
+                                        )
+                                    }
+                                    className="absolute -bottom-2 right-4 p-3 bg-primary text-white rounded-full shadow-lg hover:scale-110 transition-all"
+                                    title="Download DP"
+                                >
                                     <svg
-                                        className="w-4 h-4"
+                                        className="w-5 h-5"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -151,8 +266,44 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                                         />
                                     </svg>
-                                    Download Image
                                 </button>
+                            </div>
+                            <div className="flex-1 text-center md:text-left">
+                                <h3 className="text-2xl font-bold text-foreground mb-1">
+                                    @{result.username}
+                                </h3>
+                                <p className="text-lg text-muted-foreground mb-4">
+                                    {result.full_name}
+                                </p>
+                                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-6">
+                                    <div className="px-4 py-2 bg-muted rounded-full">
+                                        <span className="font-bold text-foreground">
+                                            {result.stats?.posts}
+                                        </span>{" "}
+                                        <span className="text-sm text-muted-foreground">
+                                            Posts
+                                        </span>
+                                    </div>
+                                    <div className="px-4 py-2 bg-muted rounded-full">
+                                        <span className="font-bold text-foreground">
+                                            {result.stats?.followers}
+                                        </span>{" "}
+                                        <span className="text-sm text-muted-foreground">
+                                            Followers
+                                        </span>
+                                    </div>
+                                    <div className="px-4 py-2 bg-muted rounded-full">
+                                        <span className="font-bold text-foreground">
+                                            {result.stats?.following}
+                                        </span>{" "}
+                                        <span className="text-sm text-muted-foreground">
+                                            Following
+                                        </span>
+                                    </div>
+                                </div>
+                                <p className="text-foreground leading-relaxed italic opacity-80 mb-0">
+                                    "{result.biography}"
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -161,15 +312,30 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
             case "caption":
                 return (
                     <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="relative">
-                            <textarea
-                                readOnly
-                                className="w-full h-48 p-4 bg-muted border border-border rounded-xl text-foreground resize-none focus:outline-none focus:border-ring transition-colors"
-                                value="Here is a sample caption extracted from the post! #instagram #downloader #cool"
-                            ></textarea>
+                        <div className="relative bg-card rounded-2xl border border-border p-6 shadow-lg">
+                            <p className="text-foreground whitespace-pre-wrap mb-4 text-lg leading-relaxed">
+                                {result.text}
+                            </p>
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                {result.hashtags?.map(
+                                    (tag: string, i: number) => (
+                                        <span
+                                            key={i}
+                                            className="text-primary font-medium hover:underline cursor-pointer"
+                                        >
+                                            {tag}
+                                        </span>
+                                    )
+                                )}
+                            </div>
                             <button
-                                className="absolute top-4 right-4 p-2 bg-card text-muted-foreground hover:text-primary rounded-lg border border-border shadow-sm hover:shadow-md transition-all"
-                                title="Copy Text"
+                                onClick={() => {
+                                    navigator.clipboard.writeText(
+                                        result.text || ""
+                                    );
+                                    alert("Caption copied to clipboard!");
+                                }}
+                                className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
                             >
                                 <svg
                                     className="w-5 h-5"
@@ -184,10 +350,6 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                                         d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
                                     />
                                 </svg>
-                            </button>
-                        </div>
-                        <div className="mt-4 flex gap-3">
-                            <button className="flex-1 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-colors">
                                 Copy Caption
                             </button>
                         </div>
@@ -197,10 +359,10 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
             case "audio":
                 return (
                     <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="bg-muted/50 p-6 rounded-2xl flex flex-col items-center text-center">
-                            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4 shadow-lg animate-pulse">
+                        <div className="bg-card p-8 rounded-[32px] border border-border shadow-2xl flex flex-col items-center text-center">
+                            <div className="w-24 h-24 bg-primary/10 rounded-3xl flex items-center justify-center mb-6 shadow-inner">
                                 <svg
-                                    className="w-8 h-8 text-primary-foreground"
+                                    className="w-12 h-12 text-primary"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -213,35 +375,26 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                                     />
                                 </svg>
                             </div>
-                            <h3 className="text-lg font-semibold text-foreground mb-1">
-                                Original Audio
+                            <h3 className="text-xl font-bold text-foreground mb-2">
+                                {result.title}
                             </h3>
-                            <p className="text-sm text-muted-foreground mb-6">
-                                Extracted from Reel
+                            <p className="text-muted-foreground mb-8">
+                                Original Audio extracted in high quality
                             </p>
 
-                            {/* Fake Audio Player */}
-                            <div className="w-full max-w-md bg-card rounded-full h-12 flex items-center px-4 shadow-sm border border-border mb-6">
-                                <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center mr-3 text-muted-foreground">
-                                    <svg
-                                        className="w-4 h-4"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                                    </svg>
-                                </div>
-                                <div className="flex-1 h-1 bg-muted rounded-full mx-2 relative">
-                                    <div className="w-1/3 h-full bg-primary rounded-full"></div>
-                                </div>
-                                <div className="text-xs text-muted-foreground font-mono">
-                                    0:15
-                                </div>
-                            </div>
+                            <audio controls className="w-full max-w-md mb-8">
+                                <source src={result.url} type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
 
-                            <button className="w-full max-w-xs py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+                            <button
+                                onClick={() =>
+                                    handleDownload(result.url, "audio.mp3")
+                                }
+                                className="w-full max-w-xs py-4 bg-primary text-primary-foreground font-bold rounded-2xl hover:bg-primary/90 transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20"
+                            >
                                 <svg
-                                    className="w-5 h-5"
+                                    className="w-6 h-6"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -253,7 +406,7 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                                     />
                                 </svg>
-                                Download Audio (MP3)
+                                Download MP3
                             </button>
                         </div>
                     </div>
