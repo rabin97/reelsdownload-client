@@ -7,28 +7,28 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Download Instagram Reels - Fast, Free & HD",
+    title: "Instagram Photo Downloader",
     description:
-        "Download Instagram Reels in high quality 1080p, 4k. Free, fast and secure Instagram Reels Downloader. No login required, no watermark.",
+        "Download Instagram photos, carousels, and images in original high quality. Best online tool to save Instagram pictures for free.",
     alternates: {
-        canonical: "/",
+        canonical: "/photo",
     },
 };
 
-export default function Home() {
+export default function PhotoPage() {
     return (
         <>
             <Hero
-                title="Download Instagram Reels"
-                highlight="in Seconds"
-                description="Save Instagram reels in high quality. No watermark, no login required, completely free."
+                title="Download Instagram Photos"
+                highlight="in High Quality"
+                description="Save Instagram photos in original quality. Multiple photo download supported."
             />
 
             <section className="max-w-5xl mx-auto px-4 pb-16 text-center">
-                <TypeNav activeType="reels" />
+                <TypeNav activeType="photo" />
                 <DownloadForm
-                    placeholder="Paste Instagram Reel URL here..."
-                    type="reels"
+                    placeholder="Paste Instagram Photo URL here..."
+                    type="photo"
                 />
                 <TrustIndicators />
             </section>
@@ -39,63 +39,64 @@ export default function Home() {
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
                 <div className="mb-16 text-left md:text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        Downloading Instagram Reels is now way more easy
+                        Saving Instagram Photos in HD is now simple
                     </h2>
                     <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We know the feeling – you scroll through Instagram, find
-                        a Reel that perfectly captures a mood or a memory, and
-                        you want to keep it. But Instagram doesn't give you a
-                        save button. That's why we created ReelsLoad. We've made
-                        the Best Instagram Reels Downloader that actually works,
-                        letting you save reels directly to your gallery in
-                        seconds. No complicated apps, no sign-ups, just a simple
-                        link paste.
+                        We've all been there: you see a breathtaking photo on
+                        Instagram, maybe a travel shot or an artistic portrait,
+                        and you want to save it as your wallpaper. Taking a
+                        screenshot lowers the quality and clutters the image
+                        with UI elements. ReelsLoad solves this by checking the
+                        source URL and extracting the original high-resolution
+                        image file for you. It's the cleanest way to download
+                        Instagram photos.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Original Quality
+                            Carousels Supported
                         </h3>
                         <p>
-                            Whether it's HD, 1080p, or 4K, we download the Reel
-                            in the exact quality it was uploaded. No
-                            compression, no pixelation.
+                            Don't limit yourself to just the first image. Our
+                            tool detects multi-photo posts (carousels) and lets
+                            you download all of them.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            No Watermark
+                            Original Resolution
                         </h3>
                         <p>
-                            Get a clean video file. We allow you to download
-                            Instagram Reels without watermarks, perfect for
-                            reposting or clean viewing.
+                            Get the highest quality image available. We pull the
+                            1080x1080 (or higher) version stored on Instagram's
+                            servers.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Any Device
+                            JPG Format
                         </h3>
                         <p>
-                            Works flawlessly on iPhone (iOS), Android, Mac, or
-                            Windows PC. ReelsLoad is your universal saver tool.
+                            Images are saved in standard JPG format, making them
+                            compatible with every device, photo editor, and
+                            gallery app.
                         </p>
                     </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
                     <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad?
+                        Why use ReelsLoad for Photos?
                     </h2>
                     <p className="text-center text-lg mb-8">
-                        ReelsLoad isn't just another downloader; it's built for
-                        speed and privacy. We don't track your downloads or ask
-                        for your password. By using our service, you're choosing
-                        the safest way to archive your favorite content. From
-                        funny clips to educational tutorials, build your own
-                        offline library of Instagram content today.
+                        ReelsLoad is the ultimate Instagram Photo Downloader
+                        because we focus on quality. We know that photographers
+                        and enthusiasts care about pixels. That's why we ensure
+                        you get the raw image file, not a compressed preview.
+                        From mood boards to backups, trust us to keep your
+                        visual collection sharp and beautiful.
                     </p>
                 </div>
 
@@ -106,32 +107,32 @@ export default function Home() {
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Is ReelsLoad free to use?
+                                Can I download multiple photos from one post?
                             </h3>
                             <p>
-                                Yes! Our Reel downloader is 100% free. You can
-                                download as many videos as you like without any
-                                hidden costs.
+                                Yes! If the link leads to a carousel (multiple
+                                photos), ReelsLoad will allow you to save them
+                                all.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Do I need to log in to my Instagram account?
+                                Will the user know I saved their photo?
                             </h3>
                             <p>
-                                Absolutely not. We prioritize your security. You
-                                only need the link to the Reel; we never ask for
-                                your Instagram password.
+                                No, the process is completely anonymous. The
+                                user is not notified when you download their
+                                photo using our tool.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Where are the downloaded videos saved?
+                                Do you support private photos?
                             </h3>
                             <p>
-                                On mobile, they usually go to your Gallery or
-                                "Downloads" folder. On PC/Mac, they will be in
-                                your default "Downloads" folder.
+                                Currently, we only support downloading photos
+                                from public Instagram accounts to respect user
+                                privacy settings.
                             </p>
                         </div>
                     </div>

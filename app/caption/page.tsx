@@ -7,28 +7,28 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Download Instagram Reels - Fast, Free & HD",
+    title: "Instagram Caption Extractor",
     description:
-        "Download Instagram Reels in high quality 1080p, 4k. Free, fast and secure Instagram Reels Downloader. No login required, no watermark.",
+        "Extract and copy Instagram captions from posts and reels. Copy hashtags and text instantly with our free tool.",
     alternates: {
-        canonical: "/",
+        canonical: "/caption",
     },
 };
 
-export default function Home() {
+export default function CaptionPage() {
     return (
         <>
             <Hero
-                title="Download Instagram Reels"
-                highlight="in Seconds"
-                description="Save Instagram reels in high quality. No watermark, no login required, completely free."
+                title="Download Instagram Captions"
+                highlight="Copy in Seconds"
+                description="Extract and copy captions from any Instagram post, reel, or video easily and for free."
             />
 
             <section className="max-w-5xl mx-auto px-4 pb-16 text-center">
-                <TypeNav activeType="reels" />
+                <TypeNav activeType="caption" />
                 <DownloadForm
-                    placeholder="Paste Instagram Reel URL here..."
-                    type="reels"
+                    placeholder="Paste Instagram URL here..."
+                    type="caption"
                 />
                 <TrustIndicators />
             </section>
@@ -39,63 +39,61 @@ export default function Home() {
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
                 <div className="mb-16 text-left md:text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        Downloading Instagram Reels is now way more easy
+                        Copy Instagram Captions & Hashtags instantly
                     </h2>
                     <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We know the feeling – you scroll through Instagram, find
-                        a Reel that perfectly captures a mood or a memory, and
-                        you want to keep it. But Instagram doesn't give you a
-                        save button. That's why we created ReelsLoad. We've made
-                        the Best Instagram Reels Downloader that actually works,
-                        letting you save reels directly to your gallery in
-                        seconds. No complicated apps, no sign-ups, just a simple
-                        link paste.
+                        Ever tried to copy a funny caption or a useful list of
+                        hashtags from the Instagram app? You can't. It's
+                        frustrating. ReelsLoad's Instagram Caption Extractor
+                        solves this annoying problem. We extract the text from
+                        any post, Reel, or video so you can copy, paste, and
+                        save it with a single click.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Original Quality
+                            Copy Text
                         </h3>
                         <p>
-                            Whether it's HD, 1080p, or 4K, we download the Reel
-                            in the exact quality it was uploaded. No
-                            compression, no pixelation.
+                            Get the full caption text exactly as it appears. No
+                            need to manually type it out from a screenshot
+                            anymore.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            No Watermark
+                            Extract Hashtags
                         </h3>
                         <p>
-                            Get a clean video file. We allow you to download
-                            Instagram Reels without watermarks, perfect for
-                            reposting or clean viewing.
+                            Smartly separate and copy hashtags. Great for social
+                            media managers looking to analyze or reuse winning
+                            tag strategies.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Any Device
+                            Preserve Emojis
                         </h3>
                         <p>
-                            Works flawlessly on iPhone (iOS), Android, Mac, or
-                            Windows PC. ReelsLoad is your universal saver tool.
+                            We keep all the formatting, line breaks, and emojis
+                            intact, so the text you copy is 100% accurate to the
+                            original.
                         </p>
                     </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
                     <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad?
+                        Why use ReelsLoad Caption Tool?
                     </h2>
                     <p className="text-center text-lg mb-8">
-                        ReelsLoad isn't just another downloader; it's built for
-                        speed and privacy. We don't track your downloads or ask
-                        for your password. By using our service, you're choosing
-                        the safest way to archive your favorite content. From
-                        funny clips to educational tutorials, build your own
-                        offline library of Instagram content today.
+                        ReelsLoad is the secret weapon for savvy Instagram
+                        users. Whether you want to quote a friend, save a recipe
+                        found in a caption, or study the hashtag strategy of a
+                        viral post, we make the text accessible. Stop typing and
+                        start copying.
                     </p>
                 </div>
 
@@ -106,32 +104,30 @@ export default function Home() {
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Is ReelsLoad free to use?
+                                Does this tool work on iOS and Android?
                             </h3>
                             <p>
-                                Yes! Our Reel downloader is 100% free. You can
-                                download as many videos as you like without any
-                                hidden costs.
+                                Yes, it works effectively on all mobile devices
+                                and desktop browsers.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Do I need to log in to my Instagram account?
+                                Does it copy the comments too?
                             </h3>
                             <p>
-                                Absolutely not. We prioritize your security. You
-                                only need the link to the Reel; we never ask for
-                                your Instagram password.
+                                Currently, we focus on extracting the main
+                                caption of the post, but we are working on
+                                adding comment support soon.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Where are the downloaded videos saved?
+                                Is it free?
                             </h3>
                             <p>
-                                On mobile, they usually go to your Gallery or
-                                "Downloads" folder. On PC/Mac, they will be in
-                                your default "Downloads" folder.
+                                Yes, the caption extraction tool is completely
+                                free to use.
                             </p>
                         </div>
                     </div>

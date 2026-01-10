@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://reelsload.com/sitemap.xml

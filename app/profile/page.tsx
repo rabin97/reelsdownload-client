@@ -7,28 +7,28 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Download Instagram Reels - Fast, Free & HD",
+    title: "Instagram Profile Viewer",
     description:
-        "Download Instagram Reels in high quality 1080p, 4k. Free, fast and secure Instagram Reels Downloader. No login required, no watermark.",
+        "View and download Instagram profile content anonymously. Access public profile data without login for free.",
     alternates: {
-        canonical: "/",
+        canonical: "/profile",
     },
 };
 
-export default function Home() {
+export default function ProfilePage() {
     return (
         <>
             <Hero
-                title="Download Instagram Reels"
-                highlight="in Seconds"
-                description="Save Instagram reels in high quality. No watermark, no login required, completely free."
+                title="View Instagram Profile"
+                highlight="Anonymously"
+                description="View and download Instagram profile content without logging in."
             />
 
             <section className="max-w-5xl mx-auto px-4 pb-16 text-center">
-                <TypeNav activeType="reels" />
+                <TypeNav activeType="profile" />
                 <DownloadForm
-                    placeholder="Paste Instagram Reel URL here..."
-                    type="reels"
+                    placeholder="Paste Username or Profile URL..."
+                    type="profile"
                 />
                 <TrustIndicators />
             </section>
@@ -39,63 +39,62 @@ export default function Home() {
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
                 <div className="mb-16 text-left md:text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        Downloading Instagram Reels is now way more easy
+                        View Instagram Profiles Anonymously
                     </h2>
                     <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We know the feeling – you scroll through Instagram, find
-                        a Reel that perfectly captures a mood or a memory, and
-                        you want to keep it. But Instagram doesn't give you a
-                        save button. That's why we created ReelsLoad. We've made
-                        the Best Instagram Reels Downloader that actually works,
-                        letting you save reels directly to your gallery in
-                        seconds. No complicated apps, no sign-ups, just a simple
-                        link paste.
+                        Want to check out a public Instagram profile but don't
+                        want to log in or accidentally like a photo? ReelsLoad
+                        is your solution. Our Anonymous Profile Viewer allows
+                        you to browse public Instagram accounts, view their
+                        posts, and explore their content without ever revealing
+                        your identity.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Original Quality
+                            No Login Needed
                         </h3>
                         <p>
-                            Whether it's HD, 1080p, or 4K, we download the Reel
-                            in the exact quality it was uploaded. No
-                            compression, no pixelation.
+                            Forget about signing in. Simply enter the username,
+                            and we'll show you the profile. Your own Instagram
+                            account stays completely separate and safe.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            No Watermark
+                            100% Anonymous
                         </h3>
                         <p>
-                            Get a clean video file. We allow you to download
-                            Instagram Reels without watermarks, perfect for
-                            reposting or clean viewing.
+                            Since you aren't logged in, the user will never know
+                            you viewed their profile. Browse with complete peace
+                            of mind and total privacy.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Any Device
+                            Clean Interface
                         </h3>
                         <p>
-                            Works flawlessly on iPhone (iOS), Android, Mac, or
-                            Windows PC. ReelsLoad is your universal saver tool.
+                            We present the profile content in a neat, organized
+                            grid, free from the distractions and infinite
+                            scrolling algorithms of the app.
                         </p>
                     </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
                     <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad?
+                        Why use ReelsLoad Profile Viewer?
                     </h2>
                     <p className="text-center text-lg mb-8">
-                        ReelsLoad isn't just another downloader; it's built for
-                        speed and privacy. We don't track your downloads or ask
-                        for your password. By using our service, you're choosing
-                        the safest way to archive your favorite content. From
-                        funny clips to educational tutorials, build your own
-                        offline library of Instagram content today.
+                        Whether you're doing market research on a competitor,
+                        keeping up with a brand, or just want to browse casually
+                        without being tracked, ReelsLoad is the perfect tool. We
+                        give you information access without the social pressure.
+                        It's fast, free, and puts you in control of your viewing
+                        experience.
                     </p>
                 </div>
 
@@ -106,32 +105,32 @@ export default function Home() {
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Is ReelsLoad free to use?
+                                Can the user see that I viewed their profile?
                             </h3>
                             <p>
-                                Yes! Our Reel downloader is 100% free. You can
-                                download as many videos as you like without any
-                                hidden costs.
+                                No, absolutely not. Because you are not logged
+                                in, there is no way for Instagram or the user to
+                                trace the view back to you.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Do I need to log in to my Instagram account?
+                                Does this work for private profiles?
                             </h3>
                             <p>
-                                Absolutely not. We prioritize your security. You
-                                only need the link to the Reel; we never ask for
-                                your Instagram password.
+                                No, our tool respects Instagram's privacy
+                                policies and can only display content from
+                                public profiles.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Where are the downloaded videos saved?
+                                Can I download content from the profile page?
                             </h3>
                             <p>
-                                On mobile, they usually go to your Gallery or
-                                "Downloads" folder. On PC/Mac, they will be in
-                                your default "Downloads" folder.
+                                Yes, often you can use our other tools (Reels or
+                                Video downloader) to save specific content you
+                                find on the profile.
                             </p>
                         </div>
                     </div>

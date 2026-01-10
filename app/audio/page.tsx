@@ -7,28 +7,28 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Download Instagram Reels - Fast, Free & HD",
+    title: "Instagram Audio Downloader",
     description:
-        "Download Instagram Reels in high quality 1080p, 4k. Free, fast and secure Instagram Reels Downloader. No login required, no watermark.",
+        "Extract and download audio from Instagram Reels and Videos. Save as high-quality MP3 instantly. Free Instagram Audio Downloader.",
     alternates: {
-        canonical: "/",
+        canonical: "/audio",
     },
 };
 
-export default function Home() {
+export default function AudioPage() {
     return (
         <>
             <Hero
-                title="Download Instagram Reels"
-                highlight="in Seconds"
-                description="Save Instagram reels in high quality. No watermark, no login required, completely free."
+                title="Download Reels Audio"
+                highlight="MP3 Format"
+                description="Extract and download audio from any Instagram Reel or Video in high quality MP3 format."
             />
 
             <section className="max-w-5xl mx-auto px-4 pb-16 text-center">
-                <TypeNav activeType="reels" />
+                <TypeNav activeType="audio" />
                 <DownloadForm
-                    placeholder="Paste Instagram Reel URL here..."
-                    type="reels"
+                    placeholder="Paste Instagram Reel or Video URL..."
+                    type="audio"
                 />
                 <TrustIndicators />
             </section>
@@ -39,63 +39,62 @@ export default function Home() {
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
                 <div className="mb-16 text-left md:text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        Downloading Instagram Reels is now way more easy
+                        Convert Instagram Video to Audio instantly
                     </h2>
                     <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We know the feeling – you scroll through Instagram, find
-                        a Reel that perfectly captures a mood or a memory, and
-                        you want to keep it. But Instagram doesn't give you a
-                        save button. That's why we created ReelsLoad. We've made
-                        the Best Instagram Reels Downloader that actually works,
-                        letting you save reels directly to your gallery in
-                        seconds. No complicated apps, no sign-ups, just a simple
-                        link paste.
+                        Found a Reel with a catchy song or a dialogue you want
+                        to use? You don't need to keep the whole video.
+                        ReelsLoad makes it incredibly easy to extract audio from
+                        Instagram Reels and videos. We strip away the visual
+                        layer and give you just the sound, perfect for your
+                        playlist or your next creative project.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Original Quality
+                            MP3 Format
                         </h3>
                         <p>
-                            Whether it's HD, 1080p, or 4K, we download the Reel
-                            in the exact quality it was uploaded. No
-                            compression, no pixelation.
+                            We convert the audio stream directly into a
+                            high-quality MP3 file, universally compatible with
+                            all music players and editing software.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            No Watermark
+                            High Bitrate
                         </h3>
                         <p>
-                            Get a clean video file. We allow you to download
-                            Instagram Reels without watermarks, perfect for
-                            reposting or clean viewing.
+                            Sound quality matters. We ensure the extracted audio
+                            maintains the highest possible bitrate from the
+                            original source for crisp sound.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Any Device
+                            Fast Extraction
                         </h3>
                         <p>
-                            Works flawlessly on iPhone (iOS), Android, Mac, or
-                            Windows PC. ReelsLoad is your universal saver tool.
+                            No waiting in queues. Our servers process the video
+                            instantly, separating the audio track in seconds so
+                            you can download and go.
                         </p>
                     </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
                     <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad?
+                        Why use ReelsLoad for Audio?
                     </h2>
                     <p className="text-center text-lg mb-8">
-                        ReelsLoad isn't just another downloader; it's built for
-                        speed and privacy. We don't track your downloads or ask
-                        for your password. By using our service, you're choosing
-                        the safest way to archive your favorite content. From
-                        funny clips to educational tutorials, build your own
-                        offline library of Instagram content today.
+                        ReelsLoad is the go-to Instagram Audio Downloader for
+                        creators and music lovers. Whether you want to save a
+                        trending sound to use in your own Reel later, or just
+                        keep a motivational speech for offline listening, we
+                        provide the tools you need. It's simple, efficient, and
+                        requires absolutely no technical skills.
                     </p>
                 </div>
 
@@ -106,32 +105,30 @@ export default function Home() {
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Is ReelsLoad free to use?
+                                Can I use the audio for my own Reels?
                             </h3>
                             <p>
-                                Yes! Our Reel downloader is 100% free. You can
-                                download as many videos as you like without any
-                                hidden costs.
+                                Yes, once you download the MP3, you can import
+                                it into any video editing app to create your own
+                                content.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Do I need to log in to my Instagram account?
+                                Does it work with any video?
                             </h3>
                             <p>
-                                Absolutely not. We prioritize your security. You
-                                only need the link to the Reel; we never ask for
-                                your Instagram password.
+                                As long as the Instagram post is public and
+                                contains audio, our tool can extract it for you.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Where are the downloaded videos saved?
+                                Is the service free?
                             </h3>
                             <p>
-                                On mobile, they usually go to your Gallery or
-                                "Downloads" folder. On PC/Mac, they will be in
-                                your default "Downloads" folder.
+                                Yes, extracting audio with ReelsLoad is
+                                completely free and unlimited.
                             </p>
                         </div>
                     </div>

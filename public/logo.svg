@@ -1,0 +1,15 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Vibrant Professional Gradient Background (Works in both themes) -->
+  <rect width="40" height="40" rx="10" fill="url(#bg_grad)"/> 
+  
+  <!-- Modern Download Arrow / Archive Symbol -->
+  <path d="M20 10V24M20 24L14 18M20 24L26 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 28C12 29.1046 12.8954 30 14 30H26C27.1046 30 28 29.1046 28 28" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  
+  <defs>
+    <linearGradient id="bg_grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1" /> <!-- Indigo -->
+      <stop offset="1" stop-color="#3B82F6" /> <!-- Blue -->
+    </linearGradient>
+  </defs>
+</svg>

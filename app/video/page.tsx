@@ -7,28 +7,28 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Download Instagram Reels - Fast, Free & HD",
+    title: "Instagram Video Downloader",
     description:
-        "Download Instagram Reels in high quality 1080p, 4k. Free, fast and secure Instagram Reels Downloader. No login required, no watermark.",
+        "Download Instagram videos online in high quality. Save IGTV and Feed videos to MP4 format instantly. Free and secure video downloader.",
     alternates: {
-        canonical: "/",
+        canonical: "/video",
     },
 };
 
-export default function Home() {
+export default function VideoPage() {
     return (
         <>
             <Hero
-                title="Download Instagram Reels"
-                highlight="in Seconds"
-                description="Save Instagram reels in high quality. No watermark, no login required, completely free."
+                title="Download Instagram Videos"
+                highlight="Fast & Easy"
+                description="Save Instagram videos in MP4 format. High quality, no watermark, fast download."
             />
 
             <section className="max-w-5xl mx-auto px-4 pb-16 text-center">
-                <TypeNav activeType="reels" />
+                <TypeNav activeType="video" />
                 <DownloadForm
-                    placeholder="Paste Instagram Reel URL here..."
-                    type="reels"
+                    placeholder="Paste Instagram Video URL here..."
+                    type="video"
                 />
                 <TrustIndicators />
             </section>
@@ -39,63 +39,63 @@ export default function Home() {
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
                 <div className="mb-16 text-left md:text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        Downloading Instagram Reels is now way more easy
+                        Downloading Instagram Videos made simple
                     </h2>
                     <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We know the feeling – you scroll through Instagram, find
-                        a Reel that perfectly captures a mood or a memory, and
-                        you want to keep it. But Instagram doesn't give you a
-                        save button. That's why we created ReelsLoad. We've made
-                        the Best Instagram Reels Downloader that actually works,
-                        letting you save reels directly to your gallery in
-                        seconds. No complicated apps, no sign-ups, just a simple
-                        link paste.
+                        Instagram is full of amazing videos, from long IGTV
+                        episodes to short feed clips. Sometimes you want to
+                        watch them without using data, or share them with
+                        friends who don't have the app. With ReelsLoad,
+                        downloading Instagram videos is now easier than ever. We
+                        help you save standard videos, reels, and IGTV content
+                        in high-quality MP4 format directly to your device.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Original Quality
+                            MP4 Format
                         </h3>
                         <p>
-                            Whether it's HD, 1080p, or 4K, we download the Reel
-                            in the exact quality it was uploaded. No
-                            compression, no pixelation.
+                            We convert and download videos in the universal MP4
+                            format, ensuring compatibility with every media
+                            player and device instantly.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            No Watermark
+                            IGTV Support
                         </h3>
                         <p>
-                            Get a clean video file. We allow you to download
-                            Instagram Reels without watermarks, perfect for
-                            reposting or clean viewing.
+                            Not just short clips. Our tool handles longer IGTV
+                            videos with ease, letting you save lengthy content
+                            to watch offline later.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Any Device
+                            Preserve Quality
                         </h3>
                         <p>
-                            Works flawlessly on iPhone (iOS), Android, Mac, or
-                            Windows PC. ReelsLoad is your universal saver tool.
+                            Don't settle for blurry screen recordings. We fetch
+                            the original source file so you get the crispest
+                            video quality possible.
                         </p>
                     </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
                     <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad?
+                        Why use ReelsLoad for Videos?
                     </h2>
                     <p className="text-center text-lg mb-8">
-                        ReelsLoad isn't just another downloader; it's built for
-                        speed and privacy. We don't track your downloads or ask
-                        for your password. By using our service, you're choosing
-                        the safest way to archive your favorite content. From
-                        funny clips to educational tutorials, build your own
-                        offline library of Instagram content today.
+                        We built ReelsLoad to be the most reliable Instagram
+                        Video Downloader on the web. We don't cap your speeds,
+                        we don't watermark the output, and we certainly don't
+                        charge you. It's a tool made for users who appreciate
+                        simplicity and quality. Whether for archiving memories
+                        or creative projects, we are here to help.
                     </p>
                 </div>
 
@@ -106,32 +106,31 @@ export default function Home() {
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Is ReelsLoad free to use?
+                                Can I download videos from private accounts?
                             </h3>
                             <p>
-                                Yes! Our Reel downloader is 100% free. You can
-                                download as many videos as you like without any
-                                hidden costs.
+                                No, we respect user privacy. ReelsLoad only
+                                allows you to download videos from public
+                                Instagram accounts.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Do I need to log in to my Instagram account?
+                                Does the downloaded video have sound?
                             </h3>
                             <p>
-                                Absolutely not. We prioritize your security. You
-                                only need the link to the Reel; we never ask for
-                                your Instagram password.
+                                Yes, absolutely. The downloaded MP4 file will
+                                include the original audio track from the video.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Where are the downloaded videos saved?
+                                Is it safe to use this downloader?
                             </h3>
                             <p>
-                                On mobile, they usually go to your Gallery or
-                                "Downloads" folder. On PC/Mac, they will be in
-                                your default "Downloads" folder.
+                                Yes, our service is secure. We don't store your
+                                history or require any personal information from
+                                you.
                             </p>
                         </div>
                     </div>

@@ -7,28 +7,28 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Download Instagram Reels - Fast, Free & HD",
+    title: "Instagram Thumbnail Downloader",
     description:
-        "Download Instagram Reels in high quality 1080p, 4k. Free, fast and secure Instagram Reels Downloader. No login required, no watermark.",
+        "Download high-quality thumbnails from Instagram Reels and Videos. Save cover art in original resolution for free.",
     alternates: {
-        canonical: "/",
+        canonical: "/thumbnail",
     },
 };
 
-export default function Home() {
+export default function ThumbnailPage() {
     return (
         <>
             <Hero
-                title="Download Instagram Reels"
-                highlight="in Seconds"
-                description="Save Instagram reels in high quality. No watermark, no login required, completely free."
+                title="Download Video Thumbnails"
+                highlight="Instantly"
+                description="View and download thumbnails from Instagram videos and reels in full HD."
             />
 
             <section className="max-w-5xl mx-auto px-4 pb-16 text-center">
-                <TypeNav activeType="reels" />
+                <TypeNav activeType="thumbnail" />
                 <DownloadForm
-                    placeholder="Paste Instagram Reel URL here..."
-                    type="reels"
+                    placeholder="Paste Instagram URL here..."
+                    type="thumbnail"
                 />
                 <TrustIndicators />
             </section>
@@ -39,17 +39,16 @@ export default function Home() {
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-muted-foreground">
                 <div className="mb-16 text-left md:text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                        Downloading Instagram Reels is now way more easy
+                        Downloading Instagram Thumbnails in HD
                     </h2>
                     <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-                        We know the feeling – you scroll through Instagram, find
-                        a Reel that perfectly captures a mood or a memory, and
-                        you want to keep it. But Instagram doesn't give you a
-                        save button. That's why we created ReelsLoad. We've made
-                        the Best Instagram Reels Downloader that actually works,
-                        letting you save reels directly to your gallery in
-                        seconds. No complicated apps, no sign-ups, just a simple
-                        link paste.
+                        The cover image of a Reel or video is often the perfect
+                        shot. But how do you save just that image? Screenshots
+                        are messy and low quality. ReelsLoad offers the perfect
+                        solution with our Instagram Thumbnail Downloader. We
+                        retrieve the full-resolution cover art from any video or
+                        reel, giving you a clean, high-quality image file in
+                        seconds.
                     </p>
                 </div>
 
@@ -59,43 +58,44 @@ export default function Home() {
                             Original Quality
                         </h3>
                         <p>
-                            Whether it's HD, 1080p, or 4K, we download the Reel
-                            in the exact quality it was uploaded. No
-                            compression, no pixelation.
+                            We fetch the master image file used by Instagram on
+                            their servers, ensuring you get the maximum possible
+                            resolution without compression.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            No Watermark
+                            No Overlay
                         </h3>
                         <p>
-                            Get a clean video file. We allow you to download
-                            Instagram Reels without watermarks, perfect for
-                            reposting or clean viewing.
+                            Get the pure image. No play buttons, no tagged user
+                            icons, no interface clutter. Just the clean artwork
+                            you want.
                         </p>
                     </div>
                     <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-sm">
                         <h3 className="text-xl font-bold text-foreground mb-4">
-                            Any Device
+                            Instant Access
                         </h3>
                         <p>
-                            Works flawlessly on iPhone (iOS), Android, Mac, or
-                            Windows PC. ReelsLoad is your universal saver tool.
+                            Simply paste the link to the Reel or video, and we
+                            will instantly display the thumbnail for you to
+                            download.
                         </p>
                     </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert max-w-none mb-16">
                     <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-                        Why use ReelsLoad?
+                        Why use ReelsLoad for Thumbnails?
                     </h2>
                     <p className="text-center text-lg mb-8">
-                        ReelsLoad isn't just another downloader; it's built for
-                        speed and privacy. We don't track your downloads or ask
-                        for your password. By using our service, you're choosing
-                        the safest way to archive your favorite content. From
-                        funny clips to educational tutorials, build your own
-                        offline library of Instagram content today.
+                        Designers, marketers, and fans love ReelsLoad because
+                        it's the easiest way to grab high-quality assets.
+                        Thumbnails are perfect for mood boards, design
+                        inspiration, or ensuring you have the right cover image
+                        for a repost. We make the process invisible and
+                        efficient, so you can focus on creating.
                     </p>
                 </div>
 
@@ -106,32 +106,31 @@ export default function Home() {
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Is ReelsLoad free to use?
+                                What is the resolution of the downloaded
+                                thumbnail?
                             </h3>
                             <p>
-                                Yes! Our Reel downloader is 100% free. You can
-                                download as many videos as you like without any
-                                hidden costs.
+                                It depends on the original upload, but we always
+                                fetch the highest available version, often
+                                1080x1920 for Reels.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Do I need to log in to my Instagram account?
+                                Can I download thumbnails from private accounts?
                             </h3>
                             <p>
-                                Absolutely not. We prioritize your security. You
-                                only need the link to the Reel; we never ask for
-                                your Instagram password.
+                                No, the post must be public for our server to
+                                access and retrieve the thumbnail image.
                             </p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-xl font-semibold text-foreground">
-                                Where are the downloaded videos saved?
+                                Is it free?
                             </h3>
                             <p>
-                                On mobile, they usually go to your Gallery or
-                                "Downloads" folder. On PC/Mac, they will be in
-                                your default "Downloads" folder.
+                                Yes, thumbnail downloading is completely free
+                                and you can use it as often as you like.
                             </p>
                         </div>
                     </div>
