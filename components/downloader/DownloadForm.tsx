@@ -519,7 +519,9 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                 <div className="md:hidden w-full flex justify-center scale-[0.85] -my-2">
                     <Turnstile
                         ref={turnstileRef}
-                        siteKey="1x00000000000000000000AA"
+                        siteKey={
+                            process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                        }
                         onSuccess={(token) => setToken(token)}
                     />
                 </div>
@@ -596,7 +598,9 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                 <div className="hidden md:block scale-[0.75] origin-center -ml-2">
                     <Turnstile
                         ref={turnstileRefDesktop}
-                        siteKey="1x00000000000000000000AA"
+                        siteKey={
+                            process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                        }
                         onSuccess={(token) => setToken(token)}
                     />
                 </div>
