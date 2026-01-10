@@ -2,6 +2,7 @@
 
 import { api } from "@/lib/api";
 import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
+import { Turnstile } from "@marsidev/react-turnstile";
 import React, { useEffect, useRef, useState } from "react";
 
 type DownloadType =
@@ -24,7 +25,10 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
     const [result, setResult] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [inputUrl, setInputUrl] = useState<string>("");
+    const [token, setToken] = useState<string | null>(null);
     const resultRef = useRef<HTMLDivElement>(null);
+    const turnstileRef = useRef<any>(null);
+    const turnstileRefDesktop = useRef<any>(null);
 
     useEffect(() => {
         if (result && resultRef.current) {
@@ -58,14 +62,24 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
             return;
         }
 
+        if (!token) {
+            setError("Please complete the security check.");
+            return;
+        }
+
         setIsLoading(true);
 
         try {
             const response = await api.post<any>("/download", {
                 url: sanitizedUrl,
                 type,
+                token,
             });
             setResult(response.data);
+            // Reset token after success
+            setToken(null);
+            turnstileRef.current?.reset();
+            turnstileRefDesktop.current?.reset();
         } catch (err: any) {
             setError(err.message || "Something went wrong. Please try again.");
         } finally {
@@ -500,6 +514,16 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                         PASTE
                     </button>
                 </div>
+
+                {/* Mobile Security Check */}
+                <div className="md:hidden w-full flex justify-center scale-[0.85] -my-2">
+                    <Turnstile
+                        ref={turnstileRef}
+                        siteKey="1x00000000000000000000AA"
+                        onSuccess={(token) => setToken(token)}
+                    />
+                </div>
+
                 <button
                     type="submit"
                     disabled={isLoading}
@@ -550,22 +574,33 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
                 </button>
             </form>
 
-            <p className="text-sm text-muted-foreground mt-4 font-medium flex items-center justify-center gap-2">
-                <svg
-                    className="w-4 h-4 text-green-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            <div className="mt-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                <p className="text-sm text-muted-foreground font-medium flex items-center justify-center gap-2">
+                    <svg
+                        className="w-4 h-4 text-green-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                    {getExampleText()}
+                </p>
+
+                {/* Desktop Security Check */}
+                <div className="hidden md:block scale-[0.75] origin-center -ml-2">
+                    <Turnstile
+                        ref={turnstileRefDesktop}
+                        siteKey="1x00000000000000000000AA"
+                        onSuccess={(token) => setToken(token)}
                     />
-                </svg>
-                {getExampleText()}
-            </p>
+                </div>
+            </div>
 
             <div ref={resultRef} className="mt-8 md:mt-12 text-left">
                 {renderResult()}
