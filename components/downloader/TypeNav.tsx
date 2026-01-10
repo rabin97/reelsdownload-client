@@ -73,7 +73,7 @@ export default function TypeNav({ activeType }: TypeNavProps) {
     ];
 
     return (
-        <div className="mb-6 md:mb-8 border-b border-border">
+        <div className="mb-4 md:mb-5 border-b border-border">
             <div className="flex overflow-x-auto overflow-y-hidden no-scrollbar pb-2 px-1 md:px-2 gap-2 md:gap-8 justify-start md:justify-center items-center">
                 {navItems.map((item) => {
                     const isActive = activeType === item.type;

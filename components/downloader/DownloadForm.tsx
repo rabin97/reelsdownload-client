@@ -474,7 +474,7 @@ export default function DownloadForm({ placeholder, type }: DownloadFormProps) {
     };
 
     return (
-        <div className="w-full max-w-4xl mx-auto mb-8 md:mb-12 px-2 md:px-0 text-center">
+        <div className="w-full max-w-4xl mx-auto mb-6 md:mb-8 px-2 md:px-0 text-center">
             {error && (
                 <div className="mb-4 md:mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400 font-semibold animate-in fade-in slide-in-from-top-2">
                     {error}
