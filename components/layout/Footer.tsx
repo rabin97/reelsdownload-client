@@ -23,19 +23,19 @@ export default function Footer() {
 
                     <div className="flex flex-wrap justify-center gap-8 text-sm font-semibold text-muted-foreground">
                         <a
-                            href="#"
+                            href="/privacy-policy"
                             className="hover:text-primary transition-colors"
                         >
                             Privacy Policy
                         </a>
                         <a
-                            href="#"
+                            href="/terms-of-service"
                             className="hover:text-primary transition-colors"
                         >
                             Terms of Service
                         </a>
                         <a
-                            href="#"
+                            href="/contact"
                             className="hover:text-primary transition-colors"
                         >
                             Contact Us
