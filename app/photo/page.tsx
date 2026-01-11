@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Photo Downloader - Save High-Res Images Online",
+    description:
+        "Download Instagram photos and images in their original high quality. Safe, fast, and completely free to use.",
+    alternates: {
+        canonical: "/photo",
+    },
+};
 
 export default function PhotoPage() {
     return (

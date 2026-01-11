@@ -1,4 +1,14 @@
 import { AlertCircle, Copyright, FileText, Scale } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Terms of Service - ReelsLoad Usage Guidelines",
+    description:
+        "Terms and conditions for using ReelsLoad services. Please read these terms carefully before using our platform.",
+    alternates: {
+        canonical: "/terms-of-service",
+    },
+};
 
 export default function TermsOfService() {
     return (

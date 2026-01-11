@@ -77,6 +77,9 @@ export const metadata: Metadata = {
             "max-snippet": -1,
         },
     },
+    other: {
+        "google-adsense-account": "ca-pub-9134772791608206",
+    },
 };
 
 import Footer from "@/components/layout/Footer";

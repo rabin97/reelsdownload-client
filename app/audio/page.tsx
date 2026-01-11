@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Audio Downloader - Reels to MP3 Converter",
+    description:
+        "Extract and download high-quality MP3 audio from any Instagram Reel or Video. Free, fast, and easy to use.",
+    alternates: {
+        canonical: "/audio",
+    },
+};
 
 export default function AudioPage() {
     return (

@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Video Downloader - Download MP4 Videos Online",
+    description:
+        "Fast and free Instagram video downloader. Save any Instagram video directly to your device in high-quality MP4 format.",
+    alternates: {
+        canonical: "/video",
+    },
+};
 
 export default function VideoPage() {
     return (

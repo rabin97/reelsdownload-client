@@ -1,4 +1,14 @@
 import { Info, Target, Users, Zap } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "About Us - ReelsLoad Instagram Downloader",
+    description:
+        "Learn more about ReelsLoad, our mission to provide the best Instagram media extraction tools, and our commitment to user privacy.",
+    alternates: {
+        canonical: "/about",
+    },
+};
 
 export default function AboutPage() {
     return (

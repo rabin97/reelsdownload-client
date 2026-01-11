@@ -1,5 +1,15 @@
 // app/contact/page.tsx
 import { Clock, Mail, MessageSquare } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Contact Us - Support & Inquiries",
+    description:
+        "Get in touch with the ReelsLoad team for support, feedback, or business inquiries. We are here to help you.",
+    alternates: {
+        canonical: "/contact",
+    },
+};
 
 export default function Contact() {
     return (

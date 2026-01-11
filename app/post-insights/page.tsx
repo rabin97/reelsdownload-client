@@ -4,11 +4,15 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Instagram Post Insights - Engagement & Reach Analyzer",
     description:
         "Analyze Instagram post performance, view counts, like counts, and engagement rates for any public Instagram post or reel.",
+    alternates: {
+        canonical: "/post-insights",
+    },
 };
 
 export default function PostInsightsPage() {
@@ -51,7 +55,7 @@ export default function PostInsightsPage() {
                             content performance.
                         </p>
                     </div>
-                    <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-[40px] p-8 border-2 border-primary/10 flex items-center justify-center">
+                    <div className="bg-linear-to-br from-primary/10 to-primary/5 rounded-[40px] p-8 border-2 border-primary/10 flex items-center justify-center">
                         <div className="space-y-6 w-full max-w-sm">
                             {[1, 2, 3].map((i) => (
                                 <div

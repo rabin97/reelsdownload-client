@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram DP Downloader - Save Profile Pictures in HD",
+    description:
+        "View and download Instagram profile pictures (DP) in full size and high quality HD. Free and fast service.",
+    alternates: {
+        canonical: "/dp",
+    },
+};
 
 export default function DPPage() {
     return (

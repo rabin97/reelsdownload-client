@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Reels Downloader - High Quality MP4 & Photos",
+    description:
+        "Download Instagram Reels, Videos, and Photos for free in high quality. No watermark, no login required, fast and secure.",
+    alternates: {
+        canonical: "/",
+    },
+};
 
 export default function Home() {
     return (
