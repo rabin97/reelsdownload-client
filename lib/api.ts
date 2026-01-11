@@ -88,11 +88,11 @@ export async function getInstagramPostData(
         const response = await apiClient.post<InstagramApiResponse>(
             "/api/v1/instagram/get-posts-data",
             { urls: [url] },
-            // {
-            //     headers: {
-            //         "CF-Turnstile-Response": token,
-            //     },
-            // }
+            {
+                headers: {
+                    "CF-Turnstile-Response": token,
+                },
+            }
         );
 
         return response.data;
