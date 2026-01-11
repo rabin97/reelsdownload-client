@@ -3,6 +3,7 @@
 import { getInstagramPostData, InstagramPost } from "@/lib/api";
 import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
 import { Turnstile } from "@marsidev/react-turnstile";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function CaptionDownloader() {
@@ -242,44 +243,144 @@ export default function CaptionDownloader() {
             <div ref={resultRef} className="mt-8 md:mt-12">
                 {result && (
                     <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {/* Caption Content */}
-                        <div className="relative bg-card rounded-2xl border border-border/50 p-8 shadow-lg mb-6">
-                            <div className="absolute top-4 left-4 text-4xl text-primary/20">
-                                "
-                            </div>
-                            <p className="text-foreground whitespace-pre-wrap text-lg leading-relaxed font-medium">
-                                {result.caption || "No caption available"}
-                            </p>
-                            <div className="absolute bottom-4 right-4 text-4xl text-primary/20">
-                                "
-                            </div>
-                        </div>
+                        <div className="bg-card rounded-[32px] border border-border shadow-lg overflow-hidden p-6 md:p-8 space-y-8">
+                            {/* Author & Stats Card */}
+                            <div className="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left transition-all">
+                                <div className="relative group">
+                                    <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/10 p-1 group-hover:border-primary/40 transition-all">
+                                        <Image
+                                            src={result.user_profile_pic}
+                                            alt={result.author}
+                                            width={80}
+                                            height={80}
+                                            className="w-full h-full rounded-full object-cover"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1 space-y-4">
+                                    <div>
+                                        <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+                                            <h3 className="text-xl font-bold text-foreground lowercase">
+                                                {result.user_full_name}
+                                            </h3>
+                                            {result.is_verified && (
+                                                <svg
+                                                    className="w-5 h-5 text-blue-500"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                                                </svg>
+                                            )}
+                                        </div>
+                                        <p className="text-muted-foreground font-medium">
+                                            @{result.author}
+                                        </p>
+                                    </div>
 
-                        {/* Copy Button */}
-                        <button
-                            onClick={() => {
-                                navigator.clipboard.writeText(
-                                    result.caption || ""
-                                );
-                                alert("Caption copied to clipboard!");
-                            }}
-                            className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                                    <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                            <svg
+                                                className="w-3.5 h-3.5"
+                                                fill="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                            </svg>
+                                            {result.like_count?.toLocaleString()}
+                                        </div>
+                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                            <svg
+                                                className="w-3.5 h-3.5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="3"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                                                />
+                                            </svg>
+                                            {result.comment_count?.toLocaleString()}
+                                        </div>
+                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                            <svg
+                                                className="w-3.5 h-3.5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="3"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                />
+                                            </svg>
+                                            {new Date(
+                                                result.timestamp * 1000
+                                            ).toLocaleDateString()}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Caption Content */}
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-2 px-2">
+                                    <svg
+                                        className="w-5 h-5 text-primary"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2.5}
+                                            d="M4 6h16M4 12h16M4 18h7"
+                                        />
+                                    </svg>
+                                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/80">
+                                        Post Caption
+                                    </h3>
+                                </div>
+                                <div className="relative bg-muted/20 rounded-[28px] border border-border/50 p-8 transition-all hover:bg-muted/30">
+                                    <p className="relative z-10 text-foreground text-base leading-relaxed whitespace-pre-wrap">
+                                        {result.caption ||
+                                            "No caption available"}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Copy Button */}
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(
+                                        result.caption || ""
+                                    );
+                                    alert("Caption copied to clipboard!");
+                                }}
+                                className="w-full py-4 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg"
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                                />
-                            </svg>
-                            Copy Caption to Clipboard
-                        </button>
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                                    />
+                                </svg>
+                                Copy Caption to Clipboard
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>

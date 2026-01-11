@@ -1,12 +1,58 @@
 "use client";
 
-import { getInstagramPostData, InstagramPost } from "@/lib/api";
-import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
-import { Turnstile } from "@marsidev/react-turnstile";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
 export default function ProfileDownloader() {
+    /* 
+       COMMING SOON UI 
+       The existing logic is commented out below.
+    */
+    return (
+        <div className="w-full max-w-4xl mx-auto mb-6 md:mb-8 px-2 md:px-0">
+            <div className="bg-card rounded-[32px] border-2 border-dashed border-primary/20 p-12 md:p-20 flex flex-col items-center justify-center text-center space-y-6 shadow-lg shadow-primary/5">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-primary/10 rounded-full flex items-center justify-center animate-pulse">
+                    <svg
+                        className="w-10 h-10 md:w-12 md:h-12 text-primary"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                </div>
+
+                <div className="space-y-2">
+                    <h2 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
+                        COMING SOON
+                    </h2>
+                    <p className="text-muted-foreground text-lg md:text-xl font-medium max-w-md mx-auto">
+                        We're currently perfecting the Profile Downloader. Stay
+                        tuned for the ultimate experience!
+                    </p>
+                </div>
+
+                <div className="flex gap-2">
+                    <div
+                        className="w-2 h-2 rounded-full bg-primary/20 animate-bounce"
+                        style={{ animationDelay: "0ms" }}
+                    ></div>
+                    <div
+                        className="w-2 h-2 rounded-full bg-primary/40 animate-bounce"
+                        style={{ animationDelay: "150ms" }}
+                    ></div>
+                    <div
+                        className="w-2 h-2 rounded-full bg-primary/60 animate-bounce"
+                        style={{ animationDelay: "300ms" }}
+                    ></div>
+                </div>
+            </div>
+        </div>
+    );
+
+    /*
     const [result, setResult] = useState<InstagramPost | null>(null);
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -351,5 +397,5 @@ export default function ProfileDownloader() {
                 )}
             </div>
         </div>
-    );
+    */
 }

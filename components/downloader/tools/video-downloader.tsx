@@ -282,90 +282,122 @@ export default function VideoDownloader() {
                     <>
                         {result.type === "carousel" ? (
                             <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                {/* Carousel Header */}
-                                <div className="mb-8">
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className="w-12 h-12 rounded-full overflow-hidden border border-border">
+                                {/* Caption Section */}
+                                {result.caption && (
+                                    <div className="space-y-4 mb-8">
+                                        <div className="flex items-center gap-2 px-2">
+                                            <svg
+                                                className="w-5 h-5 text-primary"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2.5}
+                                                    d="M4 6h16M4 12h16M4 18h7"
+                                                />
+                                            </svg>
+                                            <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/80">
+                                                Post Caption
+                                            </h3>
+                                        </div>
+                                        <div className="relative bg-muted/20 rounded-[24px] border border-border/50 p-6 transition-all hover:bg-muted/30">
+                                            <p className="text-foreground text-sm leading-relaxed whitespace-pre-wrap">
+                                                {result.caption}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Author & Stats Card */}
+                                <div className="bg-card p-6 md:p-8 rounded-[32px] border border-border shadow-lg mb-8 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left transition-all hover:shadow-xl">
+                                    <div className="relative group">
+                                        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/10 p-1 group-hover:border-primary/40 transition-all">
                                             <Image
                                                 src={result.user_profile_pic}
                                                 alt={result.author}
-                                                width={48}
-                                                height={48}
-                                                className="w-full h-full object-cover"
+                                                width={96}
+                                                height={96}
+                                                className="w-full h-full rounded-full object-cover"
                                             />
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-1.5 font-bold text-lg text-foreground">
-                                                @
-                                                {result.author ||
-                                                    "instagram_user"}
+                                    </div>
+                                    <div className="flex-1 space-y-4">
+                                        <div>
+                                            <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+                                                <h3 className="text-xl font-bold text-foreground lowercase">
+                                                    {result.user_full_name}
+                                                </h3>
                                                 {result.is_verified && (
                                                     <svg
-                                                        className="w-4 h-4 text-blue-500"
+                                                        className="w-5 h-5 text-blue-500"
                                                         fill="currentColor"
                                                         viewBox="0 0 20 20"
                                                     >
-                                                        <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                                                        <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                                                     </svg>
                                                 )}
                                             </div>
-                                            <div className="text-sm text-muted-foreground font-medium">
-                                                {result.user_full_name} •{" "}
-                                                {result.carousel_media_count ||
-                                                    result.items?.length ||
-                                                    0}{" "}
-                                                items
+                                            <p className="text-muted-foreground font-medium">
+                                                @{result.author}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                                            <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                                <svg
+                                                    className="w-3.5 h-3.5"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                                </svg>
+                                                {result.like_count?.toLocaleString()}
+                                            </div>
+                                            <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                                <svg
+                                                    className="w-3.5 h-3.5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="3"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                                                    />
+                                                </svg>
+                                                {result.comment_count?.toLocaleString()}
+                                            </div>
+                                            <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                                <svg
+                                                    className="w-3.5 h-3.5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="3"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                    />
+                                                </svg>
+                                                {new Date(
+                                                    result.timestamp * 1000
+                                                ).toLocaleDateString()}
                                             </div>
                                         </div>
-                                    </div>
-
-                                    {/* Caption */}
-                                    <div className="bg-muted/30 p-4 rounded-2xl mb-6 border border-border/50">
-                                        <p className="text-foreground text-sm leading-relaxed line-clamp-4 italic">
-                                            "
-                                            {result.caption ||
-                                                "No caption available"}
-                                            "
-                                        </p>
-                                    </div>
-
-                                    {/* Stats */}
-                                    <div className="flex flex-wrap gap-4 text-sm">
-                                        <div className="px-3 py-2 bg-muted/20 rounded-lg">
-                                            <span className="font-bold text-foreground">
-                                                {result.like_count?.toLocaleString()}
-                                            </span>{" "}
-                                            <span className="text-muted-foreground">
-                                                Likes
-                                            </span>
-                                        </div>
-                                        <div className="px-3 py-2 bg-muted/20 rounded-lg">
-                                            <span className="font-bold text-foreground">
-                                                {result.comment_count?.toLocaleString()}
-                                            </span>{" "}
-                                            <span className="text-muted-foreground">
-                                                Comments
-                                            </span>
-                                        </div>
-                                        {result.view_count !== undefined &&
-                                            result.view_count !== 0 && (
-                                                <div className="px-3 py-2 bg-muted/20 rounded-lg">
-                                                    <span className="font-bold text-foreground">
-                                                        {result.view_count?.toLocaleString()}
-                                                    </span>{" "}
-                                                    <span className="text-muted-foreground">
-                                                        Views
-                                                    </span>
-                                                </div>
-                                            )}
                                     </div>
                                 </div>
 
                                 {/* Carousel Items Grid */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
                                     {result.items?.map((item, index) => {
-                                        const mediaUrl =
-                                            item.versions?.[0]?.url;
+                                        const mediaUrl = item.url;
                                         const isVideo = item.type === "video";
 
                                         return (
@@ -505,24 +537,121 @@ export default function VideoDownloader() {
                             </div>
                         ) : (
                             <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="bg-card rounded-3xl border border-border shadow-xl overflow-hidden">
-                                    <div className="p-8 space-y-6">
+                                <div className="bg-card rounded-[32px] border border-border shadow-lg overflow-hidden">
+                                    <div className="p-8 space-y-8">
+                                        {/* Author & Stats Card */}
+                                        <div className="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left transition-all">
+                                            <div className="relative group">
+                                                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/10 p-1 group-hover:border-primary/40 transition-all">
+                                                    <Image
+                                                        src={
+                                                            result.user_profile_pic
+                                                        }
+                                                        alt={result.author}
+                                                        width={80}
+                                                        height={80}
+                                                        className="w-full h-full rounded-full object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 space-y-4">
+                                                <div>
+                                                    <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+                                                        <h3 className="text-xl font-bold text-foreground lowercase">
+                                                            {
+                                                                result.user_full_name
+                                                            }
+                                                        </h3>
+                                                        {result.is_verified && (
+                                                            <svg
+                                                                className="w-5 h-5 text-blue-500"
+                                                                fill="currentColor"
+                                                                viewBox="0 0 20 20"
+                                                            >
+                                                                <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                                                            </svg>
+                                                        )}
+                                                    </div>
+                                                    <p className="text-muted-foreground font-medium">
+                                                        @{result.author}
+                                                    </p>
+                                                </div>
+
+                                                <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                                                    <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                                        <svg
+                                                            className="w-3.5 h-3.5"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                                        </svg>
+                                                        {result.like_count?.toLocaleString()}
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                                        <svg
+                                                            className="w-3.5 h-3.5"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="3"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                                                            />
+                                                        </svg>
+                                                        {result.comment_count?.toLocaleString()}
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/5 rounded-full text-xs font-bold text-primary border border-primary/10 uppercase tracking-wider">
+                                                        <svg
+                                                            className="w-3.5 h-3.5"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="3"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                            />
+                                                        </svg>
+                                                        {new Date(
+                                                            result.timestamp *
+                                                                1000
+                                                        ).toLocaleDateString()}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         {/* Caption Section */}
                                         {result.caption && (
-                                            <div className="space-y-3">
-                                                <h3 className="text-lg font-bold text-foreground">
-                                                    Caption
-                                                </h3>
-                                                <div className="relative bg-muted/20 rounded-2xl border border-border/50 p-6">
-                                                    <div className="absolute top-4 left-4 text-4xl text-primary/10 font-serif leading-none">
-                                                        "
-                                                    </div>
+                                            <div className="space-y-4">
+                                                <div className="flex items-center gap-2 px-2">
+                                                    <svg
+                                                        className="w-5 h-5 text-primary"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2.5}
+                                                            d="M4 6h16M4 12h16M4 18h7"
+                                                        />
+                                                    </svg>
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/80">
+                                                        Post Caption
+                                                    </h3>
+                                                </div>
+                                                <div className="relative bg-muted/20 rounded-[24px] border border-border/50 p-6 transition-all hover:bg-muted/30">
                                                     <p className="relative z-10 text-foreground text-base leading-relaxed whitespace-pre-wrap">
                                                         {result.caption}
                                                     </p>
-                                                    <div className="absolute bottom-4 right-4 text-4xl text-primary/10 font-serif leading-none">
-                                                        "
-                                                    </div>
                                                 </div>
                                             </div>
                                         )}
@@ -535,8 +664,7 @@ export default function VideoDownloader() {
                                             <video
                                                 src={
                                                     result.videoUrl ||
-                                                    result.items?.[0]
-                                                        ?.versions?.[0]?.url
+                                                    result.items?.[0]?.url
                                                 }
                                                 controls
                                                 className="w-full h-auto max-h-150 object-contain"
@@ -557,7 +685,11 @@ export default function VideoDownloader() {
                                         <div className="relative w-full bg-black flex justify-center">
                                             {/* Single Photo Display */}
                                             <Image
-                                                src={result.thumbnail || ""}
+                                                src={
+                                                    result.items?.[0]?.url ||
+                                                    result.thumbnail ||
+                                                    ""
+                                                }
                                                 alt={
                                                     result.caption ||
                                                     "Instagram Photo"
@@ -575,8 +707,7 @@ export default function VideoDownloader() {
                                             onClick={() => {
                                                 const mediaUrl =
                                                     result.videoUrl ||
-                                                    result.items?.[0]
-                                                        ?.versions?.[0]?.url ||
+                                                    result.items?.[0]?.url ||
                                                     result.thumbnail;
                                                 const isVideo = !!(
                                                     result.videoUrl ||
@@ -587,7 +718,7 @@ export default function VideoDownloader() {
                                                 if (mediaUrl) {
                                                     handleDownload(
                                                         mediaUrl,
-                                                        `instagram-post-${
+                                                        `instagram-video-${
                                                             result.code
                                                         }.${
                                                             isVideo

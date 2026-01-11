@@ -112,7 +112,7 @@ export default function AudioDownloader() {
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error("Failed to download file");
-            
+
             const blob = await response.blob();
             const blobUrl = window.URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -131,7 +131,7 @@ export default function AudioDownloader() {
     return (
         <div className="w-full max-w-4xl mx-auto mb-6 md:mb-8 px-2 md:px-0">
             {/* Coming Soon Section */}
-            <div className="bg-card p-12 md:p-16 rounded-3xl border border-border shadow-2xl flex flex-col items-center text-center mb-8">
+            <div className="bg-card p-12 md:p-16 rounded-3xl border border-border shadow-lg flex flex-col items-center text-center mb-8">
                 <div className="w-24 h-24 bg-amber-500/10 rounded-3xl flex items-center justify-center mb-6">
                     <svg
                         className="w-12 h-12 text-amber-500"
