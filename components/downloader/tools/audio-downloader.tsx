@@ -1,11 +1,12 @@
 "use client";
 
-import { getInstagramPostData, InstagramPost } from "@/lib/api";
+import { getInstagramAudioData, InstagramAudioResult } from "@/lib/api";
 import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useEffect, useRef, useState } from "react";
 
 export default function AudioDownloader() {
-    const [result, setResult] = useState<InstagramPost | null>(null);
+    const [result, setResult] = useState<InstagramAudioResult | null>(null);
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [inputUrl, setInputUrl] = useState<string>("");
@@ -50,7 +51,7 @@ export default function AudioDownloader() {
         setIsLoading(true);
 
         try {
-            const response = await getInstagramPostData(sanitizedUrl, token);
+            const response = await getInstagramAudioData(sanitizedUrl, token);
 
             if (!response.success) {
                 const errorCode = response.error?.code;
@@ -63,21 +64,13 @@ export default function AudioDownloader() {
                     setToken(null);
                     turnstileRef.current?.reset();
                     turnstileRefDesktop.current?.reset();
-                } else if (errorCode === "INVALID_INSTAGRAM_URL") {
-                    errorMessage = response.error?.details || errorMessage;
                 }
 
                 setError(errorMessage);
                 return;
             }
 
-            const postData = response.results?.[0];
-            if (!postData) {
-                setError("No data found for this URL.");
-                return;
-            }
-
-            setResult(postData);
+            setResult(response);
             setToken(null);
             turnstileRef.current?.reset();
             turnstileRefDesktop.current?.reset();
@@ -130,42 +123,11 @@ export default function AudioDownloader() {
 
     return (
         <div className="w-full max-w-4xl mx-auto mb-6 md:mb-8 px-2 md:px-0">
-            {/* Coming Soon Section */}
-            <div className="bg-card p-12 md:p-16 rounded-3xl border border-border shadow-lg flex flex-col items-center text-center mb-8">
-                <div className="w-24 h-24 bg-amber-500/10 rounded-3xl flex items-center justify-center mb-6">
-                    <svg
-                        className="w-12 h-12 text-amber-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                    </svg>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-                    Coming Soon
-                </h3>
-                <p className="text-muted-foreground max-w-md mb-8 text-lg leading-relaxed">
-                    Audio extraction feature is under development. We're working
-                    hard to bring you the best audio extraction experience.
-                </p>
-                <div className="px-6 py-3 bg-amber-500/10 text-amber-700 dark:text-amber-400 rounded-lg font-semibold border border-amber-500/20">
-                    ⏳ Stay tuned for updates
-                </div>
-            </div>
-
-            {/* Commented Out Code - Form Section
             {error && (
                 <div className="mb-4 md:mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400 font-semibold animate-in fade-in slide-in-from-top-2">
                     {error}
                 </div>
             )}
-
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col md:flex-row gap-3 md:gap-4 items-center p-1.5 md:p-2 bg-card rounded-[24px] md:rounded-[28px] border-2 border-primary/20 hover:border-primary/40 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all shadow-lg shadow-primary/5"
@@ -204,8 +166,7 @@ export default function AudioDownloader() {
                     <Turnstile
                         ref={turnstileRef}
                         siteKey={
-                            process.env
-                                .NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                            process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
                         }
                         onSuccess={(token) => setToken(token)}
                     />
@@ -260,7 +221,6 @@ export default function AudioDownloader() {
                     )}
                 </button>
             </form>
-
             <div className="mt-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
                 <p className="text-sm text-muted-foreground font-medium flex items-center justify-center gap-2">
                     <svg
@@ -282,14 +242,12 @@ export default function AudioDownloader() {
                     <Turnstile
                         ref={turnstileRefDesktop}
                         siteKey={
-                            process.env
-                                .NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                            process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
                         }
                         onSuccess={(token) => setToken(token)}
                     />
                 </div>
             </div>
-
             <div ref={resultRef} className="mt-8 md:mt-12">
                 {result && (
                     <AudioTool
@@ -298,7 +256,119 @@ export default function AudioDownloader() {
                     />
                 )}
             </div>
-            */}
+        </div>
+    );
+}
+
+function AudioTool({
+    result,
+    handleDownload,
+}: {
+    result: InstagramAudioResult;
+    handleDownload: (url: string, filename: string) => Promise<void>;
+}) {
+    return (
+        <div className="bg-card border-2 border-primary/10 rounded-3xl p-6 md:p-8 shadow-xl animate-in fade-in slide-in-from-bottom-4">
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
+                <div className="w-48 h-48 bg-primary/5 rounded-2xl flex items-center justify-center relative overflow-hidden group border-2 border-primary/20">
+                    <svg
+                        className="w-20 h-20 text-primary opacity-40 group-hover:scale-110 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                        />
+                    </svg>
+                </div>
+
+                <div className="flex-1 space-y-4 md:space-y-6 w-full">
+                    <div className="space-y-1">
+                        <h3 className="text-xl md:text-2xl font-bold text-foreground line-clamp-2">
+                            {result.title}
+                        </h3>
+                        <p className="text-primary font-semibold flex items-center justify-center md:justify-start gap-2">
+                            <svg
+                                className="w-4 h-4"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                            </svg>
+                            {result.uploader}
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="bg-muted/50 p-3 rounded-2xl border border-border/50">
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-1">
+                                Duration
+                            </p>
+                            <p className="text-foreground font-bold">
+                                {Math.floor(result.duration)}s
+                            </p>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-2xl border border-border/50">
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-1">
+                                Size
+                            </p>
+                            <p className="text-foreground font-bold">
+                                {(result.file_size / (1024 * 1024)).toFixed(2)}{" "}
+                                MB
+                            </p>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-2xl border border-border/50 col-span-2 md:col-span-1">
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider mb-1">
+                                Format
+                            </p>
+                            <p className="text-foreground font-bold uppercase">
+                                MP3
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="bg-muted/30 p-4 rounded-2xl border border-dashed border-primary/30">
+                            <audio
+                                controls
+                                className="w-full h-10"
+                                src={result.download_url}
+                            >
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <button
+                            onClick={() =>
+                                handleDownload(
+                                    result.download_url,
+                                    result.file_name
+                                )
+                            }
+                            className="w-full py-4 bg-primary text-primary-foreground text-lg font-bold rounded-2xl shadow-lg shadow-primary/20 hover:bg-primary/95 hover:shadow-primary/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all flex items-center justify-center gap-3 group"
+                        >
+                            <svg
+                                className="w-6 h-6 group-hover:animate-bounce"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2.5}
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                            </svg>
+                            Download MP3
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
