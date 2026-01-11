@@ -277,7 +277,7 @@ export default function DPDownloader() {
                     <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left">
                         <div className="bg-card p-6 md:p-10 rounded-[40px] border border-border shadow-lg overflow-hidden relative">
                             {/* Decorative Background Element */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -z-0"></div>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] z-0"></div>
 
                             <div className="relative z-10 flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start text-center md:text-left">
                                 {/* Profile Picture Section */}
@@ -375,7 +375,7 @@ export default function DPDownloader() {
 
                                     {/* Stats Badges */}
                                     <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4">
-                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-[90px] shadow-sm">
+                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-22.5 shadow-sm">
                                             <span className="text-lg font-black text-foreground">
                                                 {formatNumber(
                                                     result.post_count
@@ -385,7 +385,7 @@ export default function DPDownloader() {
                                                 Posts
                                             </span>
                                         </div>
-                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-[90px] shadow-sm">
+                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-22.5 shadow-sm">
                                             <span className="text-lg font-black text-foreground">
                                                 {formatNumber(
                                                     result.follower_count
@@ -395,7 +395,7 @@ export default function DPDownloader() {
                                                 Followers
                                             </span>
                                         </div>
-                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-[90px] shadow-sm">
+                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-22.5 shadow-sm">
                                             <span className="text-lg font-black text-foreground">
                                                 {formatNumber(
                                                     result.following_count
