@@ -9,7 +9,8 @@ interface TypeNavProps {
         | "profile"
         | "dp"
         | "caption"
-        | "audio";
+        | "audio"
+        | "insights";
 }
 
 export default function TypeNav({ activeType }: TypeNavProps) {
@@ -34,6 +35,13 @@ export default function TypeNav({ activeType }: TypeNavProps) {
             iconPath:
                 "M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z",
             href: "/",
+        },
+        {
+            type: "insights",
+            label: "Insights",
+            iconPath:
+                "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
+            href: "/post-insights",
         },
         {
             type: "caption",
@@ -63,13 +71,14 @@ export default function TypeNav({ activeType }: TypeNavProps) {
                 "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
             href: "/profile",
         },
-        {
-            type: "dp",
-            label: "DP",
-            iconPath:
-                "M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-            href: "/dp",
-        },
+        // {
+        //     type: "dp",
+        //     label: "DP",
+        //     iconPath:
+        //         "M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+        //     href: "/dp",
+        // },
+        
     ];
 
     return (

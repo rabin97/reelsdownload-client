@@ -1,20 +1,23 @@
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
     return (
         <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
-            <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                 <Link
                     href="/"
-                    className="flex items-center gap-2 hover:opacity-90 transition-opacity"
+                    className="flex items-center gap-2 hover:opacity-90 transition-opacity "
                 >
-                    <img
+                    <Image
                         src="/logo.svg"
                         alt="ReelsLoad Logo"
-                        className="w-10 h-10 object-contain"
+                        width={42}
+                        height={42}
+                        className="object-contain text-primary  "
                     />
-                    <span className="text-xl font-bold text-foreground tracking-tight">
+                    <span className="text-xl font-bold text-foreground tracking-tight ">
                         Reels<span className="text-primary">Load</span>
                     </span>
                 </Link>
