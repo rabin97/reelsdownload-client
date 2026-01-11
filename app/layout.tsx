@@ -76,23 +76,72 @@ export const metadata: Metadata = {
             "max-image-preview": "large",
             "max-snippet": -1,
         },
-    }
+    },
 };
 
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import Script from "next/script";
 
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                name: "ReelsLoad",
+                alternateName: "ReelsLoad - Instagram Downloader",
+                url: "https://reelsload.com",
+                image: "https://reelsload.com/og-image.webp",
+                description:
+                    "Download Instagram Reels, Videos, Photos, Stories, and Profiles for free in high quality. No login required, fast and secure Instagram downloader.",
+                applicationCategory: "MultimediaApplication",
+                operatingSystem: "All",
+                offers: {
+                    "@type": "Offer",
+                    price: "0.00",
+                    priceCurrency: "USD",
+                },
+                aggregateRating: {
+                    "@type": "AggregateRating",
+                    ratingValue: "4.9",
+                    ratingCount: "1542",
+                },
+            },
+            {
+                "@type": "Organization",
+                name: "ReelsLoad",
+                url: "https://reelsload.com",
+                logo: "https://reelsload.com/og-image.webp",
+                sameAs: ["https://www.instagram.com/"],
+            },
+            {
+                "@type": "WebSite",
+                name: "ReelsLoad",
+                url: "https://reelsload.com",
+                description:
+                    "The best platform to save Instagram content without login.",
+                publisher: {
+                    "@id": "https://reelsload.com/#organization",
+                },
+            },
+        ],
+    };
+
     return (
         <html lang="en" suppressHydrationWarning>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}
             >
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -103,6 +152,24 @@ export default function RootLayout({
                     <main className="flex-1">{children}</main>
                     <Footer />
                 </ThemeProvider>
+
+                <Script
+                    id="site-behaviour-script"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `
+              (function() {
+                var sbSiteSecret = "4a57dd25-a7b3-4a8c-bafb-05f503c608d7";
+                window.sitebehaviourTrackingSecret = sbSiteSecret;
+                var scriptElement = document.createElement('script');
+                scriptElement.async = true;
+                scriptElement.id = 'site-behaviour-script-v2';
+                scriptElement.src = "https://sitebehaviour-cdn.fra1.cdn.digitaloceanspaces.com/index.min.js?sitebehaviour-secret=" + sbSiteSecret;
+                document.head.appendChild(scriptElement); 
+              })();
+            `,
+                    }}
+                />
             </body>
         </html>
     );
