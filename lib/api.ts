@@ -202,7 +202,43 @@ export async function getInstagramProfileData(
         const errorMessage =
             axiosError.response?.data?.error?.message ||
             axiosError.message ||
-            "Failed to fetch profile data. Please try again.";
+            "Failed to fetch Instagram profile data. Please try again.";
+
+        throw new Error(errorMessage);
+    }
+}
+
+/**
+ * Fetch Instagram post insights
+ */
+export async function getPostInsights(
+    url: string,
+    token: string
+): Promise<InstagramApiResponse> {
+    try {
+        const response = await apiClient.post<InstagramApiResponse>(
+            "/api/v1/instagram/get-posts-data",
+            {
+                urls: [url],
+                quality: "highest",
+            },
+            {
+                headers: {
+                    "CF-Turnstile-Response": token,
+                },
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        const axiosError = error as AxiosError<{
+            error?: InstagramApiError;
+        }>;
+
+        const errorMessage =
+            axiosError.response?.data?.error?.message ||
+            axiosError.message ||
+            "Failed to fetch Instagram insights. Please try again.";
 
         throw new Error(errorMessage);
     }

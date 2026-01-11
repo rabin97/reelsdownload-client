@@ -17,6 +17,7 @@ export default function Footer() {
         {
             title: "More Tools",
             links: [
+                { label: "Post Insights", href: "/post-insights" },
                 { label: "Thumbnail", href: "/thumbnail" },
                 { label: "Profile", href: "/profile" },
                 { label: "DP / Avatar", href: "/dp" },
@@ -28,6 +29,7 @@ export default function Footer() {
             links: [
                 { label: "Instagram Downloader", href: "/" },
                 { label: "Instagram Reels Downloader", href: "/" },
+                { label: "Instagram Post Insights", href: "/post-insights" },
                 {
                     label: "Instagram Profile Picture Downloader",
                     href: "/dp",
@@ -41,8 +43,10 @@ export default function Footer() {
     ];
 
     const supportLinks = [
+        { label: "About Us", href: "/about" },
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Service", href: "/terms-of-service" },
+        { label: "Disclaimer", href: "/disclaimer" },
         { label: "Contact Us", href: "/contact" },
     ];
 
@@ -71,7 +75,7 @@ export default function Footer() {
                             </span>
                         </Link>
                         <div className="space-y-4">
-                            <p className="text-sm leading-relaxed text-muted-foreground max-w-[280px]">
+                            <p className="text-sm leading-relaxed text-muted-foreground max-w-70">
                                 The professional standard for Instagram media
                                 extraction. Built for speed, privacy, and
                                 high-fidelity output.

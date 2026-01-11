@@ -1,59 +1,13 @@
 "use client";
 
+import { getInstagramProfileData, InstagramProfile } from "@/lib/api";
+import { isValidInstagramUrl, sanitizeInput } from "@/lib/utils";
+import { Turnstile } from "@marsidev/react-turnstile";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
 export default function ProfileDownloader() {
-    /* 
-       COMMING SOON UI 
-       The existing logic is commented out below.
-    */
-    return (
-        <div className="w-full max-w-4xl mx-auto mb-6 md:mb-8 px-2 md:px-0">
-            <div className="bg-card rounded-[32px] border-2 border-dashed border-primary/20 p-12 md:p-20 flex flex-col items-center justify-center text-center space-y-6 shadow-lg shadow-primary/5">
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-primary/10 rounded-full flex items-center justify-center animate-pulse">
-                    <svg
-                        className="w-10 h-10 md:w-12 md:h-12 text-primary"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                    </svg>
-                </div>
-
-                <div className="space-y-2">
-                    <h2 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
-                        COMING SOON
-                    </h2>
-                    <p className="text-muted-foreground text-lg md:text-xl font-medium max-w-md mx-auto">
-                        We're currently perfecting the Profile Downloader. Stay
-                        tuned for the ultimate experience!
-                    </p>
-                </div>
-
-                <div className="flex gap-2">
-                    <div
-                        className="w-2 h-2 rounded-full bg-primary/20 animate-bounce"
-                        style={{ animationDelay: "0ms" }}
-                    ></div>
-                    <div
-                        className="w-2 h-2 rounded-full bg-primary/40 animate-bounce"
-                        style={{ animationDelay: "150ms" }}
-                    ></div>
-                    <div
-                        className="w-2 h-2 rounded-full bg-primary/60 animate-bounce"
-                        style={{ animationDelay: "300ms" }}
-                    ></div>
-                </div>
-            </div>
-        </div>
-    );
-
-    /*
-    const [result, setResult] = useState<InstagramPost | null>(null);
+    const [result, setResult] = useState<InstagramProfile | null>(null);
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [inputUrl, setInputUrl] = useState<string>("");
@@ -98,7 +52,7 @@ export default function ProfileDownloader() {
         setIsLoading(true);
 
         try {
-            const response = await getInstagramPostData(sanitizedUrl, token);
+            const response = await getInstagramProfileData(sanitizedUrl, token);
 
             if (!response.success) {
                 const errorCode = response.error?.code;
@@ -119,13 +73,13 @@ export default function ProfileDownloader() {
                 return;
             }
 
-            const postData = response.results?.[0];
-            if (!postData) {
+            const profileData = response.profile;
+            if (!profileData) {
                 setError("No data found for this URL.");
                 return;
             }
 
-            setResult(postData);
+            setResult(profileData);
             setToken(null);
             turnstileRef.current?.reset();
             turnstileRefDesktop.current?.reset();
@@ -175,6 +129,17 @@ export default function ProfileDownloader() {
             console.error("Download failed:", err);
             setError("Failed to download. Please try again.");
         }
+    };
+
+    const formatNumber = (num: number) => {
+        if (!num) return "0";
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+        }
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+        }
+        return num.toString();
     };
 
     return (
@@ -310,92 +275,228 @@ export default function ProfileDownloader() {
             <div ref={resultRef} className="mt-8 md:mt-12">
                 {result && (
                     <div className="mt-8 border-t border-border pt-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left">
-                        <div className="bg-card p-8 rounded-[32px] border border-border shadow-2xl flex flex-col md:flex-row gap-8 items-center md:items-start">
-                            <div className="relative group">
-                                <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary/20 p-1 group-hover:border-primary/50 transition-all">
-                                    <Image
-                                        src={result.user_profile_pic}
-                                        alt="Profile"
-                                        width={160}
-                                        height={160}
-                                        className="w-full h-full rounded-full object-cover"
-                                    />
-                                </div>
-                                <button
-                                    onClick={() =>
-                                        handleDownload(
-                                            result.user_profile_pic,
-                                            `profile-${result.author}.jpg`
-                                        )
-                                    }
-                                    className="absolute -bottom-2 right-4 p-3 bg-primary text-white rounded-full shadow-lg hover:scale-110 transition-all"
-                                    title="Download DP"
-                                >
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        <div className="bg-card p-6 md:p-10 rounded-[40px] border border-border shadow-lg overflow-hidden relative">
+                            {/* Decorative Background Element */}
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] z-0"></div>
+
+                            <div className="relative z-10 flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start text-center md:text-left">
+                                {/* Profile Picture Section */}
+                                <div className="relative group shrink-0">
+                                    <div className="w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-4 border-primary/20 p-1 group-hover:border-primary/50 transition-all duration-500 shadow-md">
+                                        <Image
+                                            src={result.profile_pic_url_hd}
+                                            alt={result.username}
+                                            width={208}
+                                            height={208}
+                                            className="w-full h-full rounded-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div className="flex-1 text-center md:text-left">
-                                <h3 className="text-2xl font-bold text-foreground mb-1">
-                                    @{result.author}
-                                    {result.is_verified && (
+                                    </div>
+                                    <button
+                                        onClick={() =>
+                                            handleDownload(
+                                                result.profile_pic_url_hd,
+                                                `profile-${result.username}.jpg`
+                                            )
+                                        }
+                                        className="absolute -bottom-2 right-6 p-4 bg-primary text-white rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all z-20 group/btn"
+                                        title="Download High-Res DP"
+                                    >
                                         <svg
-                                            className="inline w-6 h-6 ml-2 text-blue-500"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
+                                            className="w-6 h-6 group-hover/btn:animate-bounce"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
                                         >
-                                            <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2.5}
+                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                            />
                                         </svg>
+                                    </button>
+                                </div>
+
+                                {/* Profile Details Section */}
+                                <div className="flex-1 space-y-6 flex flex-col justify-center min-w-0 w-full">
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-center md:justify-start gap-2 flex-wrap">
+                                            <h3 className="text-3xl md:text-4xl font-black text-foreground lowercase tracking-tight truncate max-w-full">
+                                                {result.full_name ||
+                                                    `@${result.username}`}
+                                            </h3>
+                                            {result.is_verified && (
+                                                <svg
+                                                    className="w-7 h-7 text-blue-500 shrink-0"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                                                </svg>
+                                            )}
+                                        </div>
+                                        <p className="text-xl text-muted-foreground font-semibold flex items-center justify-center md:justify-start gap-1">
+                                            @
+                                            <span className="truncate">
+                                                {result.username}
+                                            </span>
+                                            <div className="flex gap-2 ml-2">
+                                                {result.is_private && (
+                                                    <span className="flex items-center gap-1 px-2 py-0.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-tighter rounded-md border border-amber-500/20">
+                                                        <svg
+                                                            className="w-2.5 h-2.5"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 20 20"
+                                                        >
+                                                            <path
+                                                                fillRule="evenodd"
+                                                                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                                                clipRule="evenodd"
+                                                            />
+                                                        </svg>
+                                                        Private
+                                                    </span>
+                                                )}
+                                                {result.is_business_account && (
+                                                    <span className="flex items-center gap-1 px-2 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-tighter rounded-md border border-blue-500/20">
+                                                        <svg
+                                                            className="w-2.5 h-2.5"
+                                                            fill="currentColor"
+                                                            viewBox="0 0 20 20"
+                                                        >
+                                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                                        </svg>
+                                                        Business
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </p>
+                                    </div>
+
+                                    {/* Stats Badges */}
+                                    <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4">
+                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-22.5 shadow-sm">
+                                            <span className="text-lg font-black text-foreground">
+                                                {formatNumber(
+                                                    result.post_count
+                                                )}
+                                            </span>
+                                            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                                                Posts
+                                            </span>
+                                        </div>
+                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-22.5 shadow-sm">
+                                            <span className="text-lg font-black text-foreground">
+                                                {formatNumber(
+                                                    result.follower_count
+                                                )}
+                                            </span>
+                                            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                                                Followers
+                                            </span>
+                                        </div>
+                                        <div className="flex flex-col items-center md:items-start px-5 py-2.5 bg-primary/5 rounded-2xl border border-primary/10 min-w-22.5 shadow-sm">
+                                            <span className="text-lg font-black text-foreground">
+                                                {formatNumber(
+                                                    result.following_count
+                                                )}
+                                            </span>
+                                            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                                                Following
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Biography */}
+                                    {result.biography && (
+                                        <div className="relative p-6 bg-muted/30 rounded-[24px] border border-border/50 group/bio transition-all hover:bg-muted/50">
+                                            <div className="absolute top-2 left-4 text-3xl text-primary/20 font-serif leading-none">
+                                                “
+                                            </div>
+                                            <p className="text-foreground text-sm md:text-base leading-relaxed font-medium pl-2 relative z-10 whitespace-pre-wrap">
+                                                {result.biography}
+                                            </p>
+                                            {result.external_url && (
+                                                <a
+                                                    href={result.external_url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="mt-3 flex items-center gap-1.5 text-primary text-sm font-bold hover:underline"
+                                                >
+                                                    <svg
+                                                        className="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2.5}
+                                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                                        />
+                                                    </svg>
+                                                    {
+                                                        result.external_url
+                                                            .replace(
+                                                                /^https?:\/\/(www\.)?/,
+                                                                ""
+                                                            )
+                                                            .split("/")[0]
+                                                    }
+                                                </a>
+                                            )}
+                                        </div>
                                     )}
-                                </h3>
-                                <p className="text-lg text-muted-foreground mb-4">
-                                    {result.user_full_name}
-                                </p>
-                                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-6">
-                                    <div className="px-4 py-2 bg-muted rounded-full">
-                                        <span className="font-bold text-foreground">
-                                            {result.like_count?.toLocaleString()}
-                                        </span>{" "}
-                                        <span className="text-sm text-muted-foreground">
-                                            Likes
-                                        </span>
-                                    </div>
-                                    <div className="px-4 py-2 bg-muted rounded-full">
-                                        <span className="font-bold text-foreground">
-                                            {result.view_count?.toLocaleString()}
-                                        </span>{" "}
-                                        <span className="text-sm text-muted-foreground">
-                                            Views
-                                        </span>
-                                    </div>
-                                    <div className="px-4 py-2 bg-muted rounded-full">
-                                        <span className="font-bold text-foreground">
-                                            {result.comment_count?.toLocaleString()}
-                                        </span>{" "}
-                                        <span className="text-sm text-muted-foreground">
-                                            Comments
-                                        </span>
+
+                                    {/* Download & View Actions */}
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <button
+                                            onClick={() =>
+                                                handleDownload(
+                                                    result.profile_pic_url_hd,
+                                                    `profile-${result.username}-hd.jpg`
+                                                )
+                                            }
+                                            className="flex-1 py-4 bg-primary text-primary-foreground font-black rounded-2xl hover:bg-primary/90 transition-all shadow-md shadow-primary/10 flex items-center justify-center gap-3 uppercase tracking-widest text-sm"
+                                        >
+                                            <svg
+                                                className="w-5 h-5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={3}
+                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                                />
+                                            </svg>
+                                            Download HD DP
+                                        </button>
+                                        <a
+                                            href={`https://instagram.com/${result.username}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex-1 py-4 bg-muted/50 text-foreground font-black rounded-2xl hover:bg-muted transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-sm border border-border"
+                                        >
+                                            <svg
+                                                className="w-5 h-5"
+                                                fill="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.246 2.242 1.308 3.607.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.246-3.607 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.246-2.242-1.308-3.607-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.246 3.607-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.277.057-2.148.258-2.911.554-.789.306-1.459.717-2.126 1.384s-1.078 1.337-1.383 2.126c-.297.763-.497 1.634-.554 2.911-.059 1.28-.073 1.688-.073 4.947s.014 3.667.072 4.947c.057 1.277.258 2.148.554 2.911.306.789.717 1.459 1.384 2.126s1.337 1.078 2.126 1.383c.763.297 1.634.497 2.911.554 1.28.059 1.688.073 4.947.073s3.667-.014 4.947-.072c1.277-.057 2.148-.258 2.911-.554.789-.306 1.459-.717 2.126-1.384s1.078-1.337 1.383-2.126c.297-.763.497-1.634.554-2.911.059-1.28.073-1.688.073-4.947s-.014-3.667-.072-4.947c-.057-1.277-.258-2.148-.554-2.911-.306-.789-.717-1.459-1.384-2.126s-1.337-1.078-2.126-1.383c-.763-.297-1.634-.497-2.911-.554-1.28-.059-1.688-.073-4.947-.073zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z" />
+                                            </svg>
+                                            View Profile
+                                        </a>
                                     </div>
                                 </div>
-                                <p className="text-foreground leading-relaxed italic opacity-80 mb-0">
-                                    "{result.caption || "No bio available"}"
-                                </p>
                             </div>
                         </div>
                     </div>
                 )}
             </div>
         </div>
-    */
+    );
 }
