@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Profile Downloader - View Profiles Anonymously",
+    description:
+        "View and download Instagram profile details and media anonymously. No login needed, fast and private.",
+    alternates: {
+        canonical: "/profile",
+    },
+};
 
 export default function ProfilePage() {
     return (

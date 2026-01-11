@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Caption Downloader - Extract & Copy Captions",
+    description:
+        "Quickly extract and copy captions from any Instagram post or reel. Simple tool for content creators and marketers.",
+    alternates: {
+        canonical: "/caption",
+    },
+};
 
 export default function CaptionPage() {
     return (

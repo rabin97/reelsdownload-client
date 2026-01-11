@@ -1,4 +1,14 @@
 import { EyeOff, Lock, MapPin, Shield } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy - ReelsLoad Data Protection",
+    description:
+        "Learn how ReelsLoad protects your privacy and handles your data. We are committed to transparency and user security.",
+    alternates: {
+        canonical: "/privacy-policy",
+    },
+};
 
 export default function PrivacyPolicy() {
     const lastUpdated = "January 11, 2026";

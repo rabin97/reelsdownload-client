@@ -1,4 +1,14 @@
 import { AlertTriangle, Copyright, Scale, ShieldAlert } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Legal Disclaimer - ReelsLoad",
+    description:
+        "Important legal information regarding the use of ReelsLoad services and our non-affiliation with Instagram or Meta.",
+    alternates: {
+        canonical: "/disclaimer",
+    },
+};
 
 export default function DisclaimerPage() {
     const lastUpdated = "January 11, 2026";

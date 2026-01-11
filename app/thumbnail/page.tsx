@@ -4,6 +4,16 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Instagram Thumbnail Downloader - Save Post Thumbnails HD",
+    description:
+        "Download high-quality thumbnails and cover images from any Instagram Video or Reel. Simple, fast, and free.",
+    alternates: {
+        canonical: "/thumbnail",
+    },
+};
 
 export default function ThumbnailPage() {
     return (
