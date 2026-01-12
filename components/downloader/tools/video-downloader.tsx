@@ -39,7 +39,7 @@ export default function VideoDownloader() {
 
         if (!isValidInstagramUrl(sanitizedUrl)) {
             setError(
-                "Please enter a valid Instagram URL (e.g., instagram.com/p/...)."
+                "Please enter a valid Instagram URL (e.g., instagram.com/p/..., instagram.com/reels/..., etc.)."
             );
             return;
         }
@@ -67,6 +67,9 @@ export default function VideoDownloader() {
                     turnstileRefDesktop.current?.reset();
                 } else if (errorCode === "INVALID_INSTAGRAM_URL") {
                     errorMessage = response.error?.details || errorMessage;
+                } else if (errorCode === "MEDIA_NOT_FOUND") {
+                    errorMessage =
+                        "No posts found. Make sure the link is correct and the post is not private or deleted.";
                 }
 
                 setError(errorMessage);
@@ -264,7 +267,7 @@ export default function VideoDownloader() {
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-                    Example: https://www.instagram.com/reel/Cz7Y8L_M5xV/
+                    Example: https://www.instagram.com/reels/Cz7Y8L_M5xV/
                 </p>
                 <div className="hidden md:block scale-[0.75] origin-center">
                     <Turnstile

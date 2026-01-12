@@ -67,6 +67,9 @@ export default function PhotoDownloader() {
                     turnstileRefDesktop.current?.reset();
                 } else if (errorCode === "INVALID_INSTAGRAM_URL") {
                     errorMessage = response.error?.details || errorMessage;
+                } else if (errorCode === "MEDIA_NOT_FOUND") {
+                    errorMessage =
+                        "No posts found. Make sure the link is correct and the post is not private or deleted.";
                 }
 
                 setError(errorMessage);

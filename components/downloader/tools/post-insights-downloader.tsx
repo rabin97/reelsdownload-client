@@ -39,7 +39,7 @@ export default function PostInsightsDownloader() {
 
         if (!isValidInstagramUrl(sanitizedUrl)) {
             setError(
-                "Please enter a valid Instagram URL (e.g., instagram.com/p/...)."
+                "Please enter a valid Instagram URL (e.g., instagram.com/p/..., instagram.com/reels/..., etc.)."
             );
             return;
         }
@@ -65,6 +65,9 @@ export default function PostInsightsDownloader() {
                     setToken(null);
                     turnstileRef.current?.reset();
                     turnstileRefDesktop.current?.reset();
+                } else if (errorCode === "MEDIA_NOT_FOUND") {
+                    errorMessage =
+                        "No posts found. Make sure the link is correct and the post is not private or deleted.";
                 }
 
                 setError(errorMessage);
