@@ -7,10 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 
 export function isValidInstagramUrl(url: string): boolean {
     const instagramRegex =
-        /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv|stories|username)\/([a-zA-Z0-9_-]+)\/?/i;
+        /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reels?|tv|stories|username)\/([a-zA-Z0-9_-]+)\/?$/i;
     // Also support simple profile urls like instagram.com/username
     const profileRegex =
-        /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9_\.]+)$/i;
+        /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9_\.]+)\/?$/i;
 
     return instagramRegex.test(url) || profileRegex.test(url);
 }
@@ -29,11 +29,26 @@ export function sanitizeInput(input: string): string {
         return "";
     }
 
-    // 4. Encode special chars that might be problematic in some contexts
-    // (Though for a URL we usually want to keep it mostly as is, just safe)
-    // We mainly want to ensure no malicious code is embedded.
-    // For this specific use case (URL input), we can clamp it to allowed characters logic
-    // or just rely on the validation regex which is strict.
+    // 4. Remove query parameters from URLs
+    // This handles cases like instagram.com/user?utm_source=... or instagram.com/reel/abc/?igsh=...
+    try {
+        if (
+            sanitized.includes("instagram.com") ||
+            sanitized.includes("instagr.am")
+        ) {
+            const queryIndex = sanitized.indexOf("?");
+            if (queryIndex !== -1) {
+                sanitized = sanitized.substring(0, queryIndex);
+            }
+            // Also remove trailing hash/fragments
+            const hashIndex = sanitized.indexOf("#");
+            if (hashIndex !== -1) {
+                sanitized = sanitized.substring(0, hashIndex);
+            }
+        }
+    } catch (e) {
+        // Fallback if parsing fails
+    }
 
     return sanitized;
 }
