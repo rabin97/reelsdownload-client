@@ -1,10 +1,13 @@
 import ReelsDownloader from "@/components/downloader/tools/reels-downloader";
 import TypeNav from "@/components/downloader/TypeNav";
-import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
-import HowItWorks from "@/components/home/HowItWorks";
 import TrustIndicators from "@/components/home/TrustIndicators";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+
+const Features = dynamic(() => import("@/components/home/Features"));
+const HowItWorks = dynamic(() => import("@/components/home/HowItWorks"));
 
 export const metadata: Metadata = {
     title: "Instagram Reels Downloader - High Quality MP4 & Photos",
@@ -63,11 +66,14 @@ export default function Home() {
                                         key={i}
                                         className="w-10 h-10 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[10px] font-bold overflow-hidden"
                                     >
-                                        <img
+                                        <Image
                                             src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${
                                                 i * 42
                                             }`}
                                             alt="User"
+                                            width={40}
+                                            height={40}
+                                            className="w-full h-full object-cover"
                                         />
                                     </div>
                                 ))}

@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import Head from "next/head";
+import Script from "next/script";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -45,7 +50,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "ReelsLoad - Best Instagram Reels & Video Downloader",
         description:
-            "Save any Instagram content instantly in HD. Fast, free, and secure Instagram downloader.",
+            "Download Instagram Reels, Videos, Photos, Stories, and Profiles for free in high quality. No login required, fast and secure Instagram downloader.",
         url: "https://reelsload.com",
         siteName: "ReelsLoad",
         locale: "en_US",
@@ -63,7 +68,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "ReelsLoad - Best Instagram Reels Downloader",
         description:
-            "Download Instagram Reels, Videos, and Photos in high quality for free with ReelsLoad.",
+            "Download Instagram Reels, Videos, Photos, Stories, and Profiles for free in high quality. No login required, fast and secure Instagram downloader.",
         images: ["/og-image.webp"],
     },
     robots: {
@@ -77,15 +82,21 @@ export const metadata: Metadata = {
             "max-snippet": -1,
         },
     },
+    icons: {
+        icon: [
+            {
+                url: "/favicon.ico",
+                sizes: "any",
+            },
+        ],
+        apple: "/favicon.ico",
+        shortcut: "/favicon.ico",
+    },
     other: {
         "google-adsense-account": "ca-pub-9134772791608206",
     },
 };
 
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
-import { ThemeProvider } from "@/components/theme-provider";
-import Script from "next/script";
 
 export default function RootLayout({
     children,
@@ -138,6 +149,13 @@ export default function RootLayout({
 
     return (
         <html lang="en" suppressHydrationWarning>
+            <Head>
+                <script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9134772791608206"
+                    crossOrigin="anonymous"
+                ></script>
+            </Head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}
             >
