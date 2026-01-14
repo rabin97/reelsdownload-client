@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "images.weserv.nl",
             },
+            {
+                protocol: "https",
+                hostname: "api.dicebear.com",
+            },
         ],
     },
 };
