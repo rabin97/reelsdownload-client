@@ -47,6 +47,20 @@ export const metadata: Metadata = {
     alternates: {
         canonical: "/",
     },
+    icons: {
+        icon: [
+            {
+                url: "/favicon.ico",
+                sizes: "any",
+            },
+            {
+                url: "/logo.svg",
+                type: "image/svg+xml",
+            },
+        ],
+        apple: "/favicon.ico",
+        shortcut: "/favicon.ico",
+    },
     openGraph: {
         title: "ReelsLoad - Best Instagram Reels & Video Downloader",
         description:
