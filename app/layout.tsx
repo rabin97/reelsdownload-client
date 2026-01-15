@@ -96,16 +96,7 @@ export const metadata: Metadata = {
             "max-snippet": -1,
         },
     },
-    icons: {
-        icon: [
-            {
-                url: "/favicon.ico",
-                sizes: "any",
-            },
-        ],
-        apple: "/favicon.ico",
-        shortcut: "/favicon.ico",
-    },
+
     other: {
         "google-adsense-account": "ca-pub-9134772791608206",
     },
