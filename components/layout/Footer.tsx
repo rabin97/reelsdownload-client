@@ -8,10 +8,10 @@ export default function Footer() {
         {
             title: "Downloaders",
             links: [
-                { label: "Reels", href: "/" },
-                { label: "Video", href: "/video" },
-                { label: "Photo", href: "/photo" },
-                { label: "Audio", href: "/audio" },
+                { label: "Reels", href: "/instagram-reels-downloader" },
+                { label: "Video", href: "/download-instagram-videos" },
+                { label: "Photo", href: "/download-instagram-photos" },
+                { label: "Audio", href: "/download-instagram-audio" },
             ],
         },
         {
@@ -28,15 +28,15 @@ export default function Footer() {
             title: "Popular",
             links: [
                 { label: "Instagram Downloader", href: "/" },
-                { label: "Instagram Reels Downloader", href: "/" },
+                { label: "Instagram Reels Downloader", href: "/instagram-reels-downloader" },
                 { label: "Instagram Post Insights", href: "/post-insights" },
                 {
                     label: "Instagram Profile Picture Downloader",
                     href: "/dp",
                 },
-                { label: "Instagram Photo Downloader", href: "/photo" },
+                { label: "Instagram Photo Downloader", href: "/download-instagram-photos" },
                 { label: "Instagram Profile Downloader", href: "/profile" },
-                { label: "Instagram to MP3", href: "/audio" },
+                { label: "Instagram to MP3", href: "/download-instagram-audio" },
                 { label: "instagram", href: "/" },
             ],
         },
@@ -93,9 +93,8 @@ export default function Footer() {
                     {toolGroups.map((group, idx) => (
                         <div
                             key={group.title}
-                            className={`space-y-6 ${
-                                idx === 2 ? "lg:col-span-3" : "lg:col-span-2"
-                            }`}
+                            className={`space-y-6 ${idx === 2 ? "lg:col-span-3" : "lg:col-span-2"
+                                }`}
                         >
                             <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground/40">
                                 {group.title}
