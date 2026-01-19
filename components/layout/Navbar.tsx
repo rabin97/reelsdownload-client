@@ -16,6 +16,9 @@ export default function Navbar() {
                         width={42}
                         height={42}
                         className="object-contain text-primary  "
+                        priority
+                        fetchPriority="high"
+                        sizes="42px"
                     />
                     <span className="text-xl font-bold text-foreground tracking-tight ">
                         Reels<span className="text-primary">Load</span>
