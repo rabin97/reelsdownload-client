@@ -43,7 +43,7 @@ export default function AudioPage() {
 
             <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 space-y-12">
                 <div className="space-y-6">
-                    <h1 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+                    <h1 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-pink-500 via-purple-500 to-indigo-500">
                         Instagram Audio Downloader & MP3 Converter
                     </h1>
                     <p className="text-lg leading-relaxed text-muted-foreground">

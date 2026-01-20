@@ -38,7 +38,7 @@ export default function AudioDownloader() {
 
         if (!isValidInstagramUrl(sanitizedUrl)) {
             setError(
-                "Please enter a valid Instagram URL (e.g., instagram.com/p/..., instagram.com/reels/..., etc.)."
+                "Please enter a valid Instagram URL (e.g., instagram.com/p/..., instagram.com/reels/..., etc.).",
             );
             return;
         }
@@ -339,7 +339,9 @@ function AudioTool({
                             <audio
                                 controls
                                 className="w-full h-10"
-                                src={result.download_url}
+                                src={`/api/v1/instagram/download-audio?path=${encodeURIComponent(
+                                    result.download_url,
+                                )}`}
                             >
                                 Your browser does not support the audio element.
                             </audio>
@@ -348,8 +350,10 @@ function AudioTool({
                         <button
                             onClick={() =>
                                 handleDownload(
-                                    result.download_url,
-                                    result.file_name
+                                    `/api/v1/instagram/download-audio?path=${encodeURIComponent(
+                                        result.download_url,
+                                    )}`,
+                                    result.file_name,
                                 )
                             }
                             className="w-full py-4 bg-primary text-primary-foreground text-lg font-bold rounded-2xl shadow-lg shadow-primary/20 hover:bg-primary/95 hover:shadow-primary/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all flex items-center justify-center gap-3 group"
