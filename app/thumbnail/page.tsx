@@ -19,7 +19,7 @@ export default function ThumbnailPage() {
     return (
         <>
             <Hero
-                title="Download Video Thumbnails"
+                title="Download Instagram Video Thumbnails"
                 highlight="Instantly"
                 description="View and download thumbnails from Instagram videos and reels in full HD."
             />

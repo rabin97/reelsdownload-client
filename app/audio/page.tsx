@@ -19,7 +19,7 @@ export default function AudioPage() {
     return (
         <>
             <Hero
-                title="Download Reels Audio"
+                title="Download Instagram Reels Audio"
                 highlight="MP3 Format"
                 description="Extract and download audio from any Instagram Reel or Video in high quality MP3 format."
             />
