@@ -45,21 +45,30 @@ export const metadata: Metadata = {
     },
     metadataBase: new URL("https://reelsload.com"),
     alternates: {
-        canonical: "/",
+        canonical: "./",
     },
     icons: {
         icon: [
+            { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+            { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+            { url: "/icon-48.png", sizes: "48x48", type: "image/png" },
+            { url: "/icon-64.png", sizes: "64x64", type: "image/png" },
+        ],
+        apple: [{ url: "/icon-180.png", sizes: "180x180", type: "image/png" }],
+        other: [
             {
-                url: "/favicon.ico",
-                sizes: "any",
+                rel: "icon",
+                url: "/icon-192.png",
+                sizes: "192x192",
+                type: "image/png",
             },
             {
-                url: "/logo.svg",
-                type: "image/svg+xml",
+                rel: "icon",
+                url: "/icon-512.png",
+                sizes: "512x512",
+                type: "image/png",
             },
         ],
-        apple: "/favicon.ico",
-        shortcut: "/favicon.ico",
     },
     openGraph: {
         title: "ReelsLoad - Best Instagram Reels & Video Downloader",
