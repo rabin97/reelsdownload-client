@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
         "Quickly extract and copy captions from any Instagram post or reel. Simple tool for content creators and marketers.",
     alternates: {
-        canonical: "/caption",
+        canonical: "/download-instagram-caption",
     },
 };
 
